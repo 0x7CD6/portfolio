@@ -1,0 +1,184 @@
+@font-face {
+    font-family: 'Chakra Petch', sans-serif;
+    format('truetype');
+}
+
+html,
+body {
+    margin: 0;
+    font-family: 'Chakra Petch';
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+p {
+    color: #fff;
+    text-shadow: 4px 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+a:link {
+    color: #fff;
+}
+
+a:visited {
+    color: #fff;
+}
+
+a:hover {
+    color: #000;
+}
+
+a:active {
+    color: #fff;
+}
+
+/* #main {
+    background-image: url(./background.png);
+    background-size: cover;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+} */
+
+#videobg {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+}
+
+#title {
+    color: white;
+    font-size: 6em;
+    margin: 0;
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    transform: translate(0, -50%);
+    text-align: center;
+    animation: overlapcolor 2s ease-in;
+    z-index: 99;
+    opacity: 1;
+}
+
+#subtitle {
+    color: white;
+    font-size: 4em;
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    transform: translate(0, -50%);
+    text-align: center;
+    animation: overlapcolor 2s ease-out;
+    z-index: 99;
+    opacity: 1;
+}
+
+#content {
+    color: white;
+    font-size: 2em;
+    margin: 0;
+    position: absolute;
+    top: 60%;
+    width: 100%;
+    transform: translate(0, -50%);
+    text-align: center;
+    animation: overlapcolor 2s ease-out;
+    z-index: 99;
+    opacity: 1;
+}
+
+@keyframes overlapcolor {
+    0% {
+        color: black;
+        opacity: 0;
+    }
+    25% {
+        opacity: 0;
+    }
+    50% {
+        color: black;
+        opacity: 1;
+    }
+    100% {
+        color: white;
+    }
+}
+
+#content::after {
+    animation: cursoranim 1s infinite, hideAtStart 2.5s linear;
+    animation-timing-function: step-end;
+    content: "|";
+    margin-left: 5px;
+}
+
+@keyframes hideAtStart {
+    0% {
+        opacity: 0;
+    }
+    99.99% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes cursoranim {
+    0% {
+        color: transparent;
+    }
+    50% {
+        color: white;
+    }
+}
+
+#menu {
+    text-align: center;
+    width: 100%;
+    margin: 0 0 10px 0;
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+}
+
+#menu li {
+    display: inline;
+    margin: 0px 25px 0px 25px;
+    font-size: 1.8em;
+    transition: all 0.2s;
+    text-decoration: underline;
+}
+
+#menu li:hover {
+    font-size: 2.6em;
+    cursor: pointer;
+}
+
+#transition-placeholder {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: #212121;
+    animation: overlap 2s cubic-bezier(0, 0, 0.08, 1.02);
+}
+
+@keyframes overlap {
+    0% {
+        top: 0%;
+    }
+    50% {
+        top: 0%;
+    }
+    100% {
+        top: 100%;
+    }
+}

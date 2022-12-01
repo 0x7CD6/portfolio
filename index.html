@@ -16,16 +16,138 @@
     <script type="text/javascript" src="./assets/js/scrollTimer.js"></script>
 </head>
 <body onscroll="bodyScroll()">
-    <video autoplay muted loop id="video"><source src="./assets/videos/wednesday_addamsbg.mp4" type="video/mp4"></video>
-    <audio autoplay loop id="playAudio"><source src="./assets/audio/wednesday_addamsbg_audio.mp3"></audio>
-    <div id="main">
-        <div id="title"><p>Arianna \|/ 0x7CD6</p></div>
-        <div id=subtitle><p>Freelance Development</p></div>
-        <div id=content><p>Working on private projects currently!</a></p></div>
-        <ul id="menu">
-            <a href="https://github.com/0x7CD6" target="_blank"><i style="font-size: 3em; color: rgb(73, 73, 73);" class="fab fa-github"></i></a> &nbsp;
-            <a href="https://twitter.com/0x7CD6" target="_blank"><i style="font-size: 3em; color: rgb(73, 73, 73);" class="fab fa-twitter"></i></a>
-        </ul>
-    </div>
+    <video autoplay muted loop disablePictureInPicture id="playVideo" src="./assets/videos/wednesday_addamsbg.mp4" type="video/mp4" />
+    <iframe src="./assets/audio/wednesday_addamsbg_audio.mp3" type="audio/mp3" allow="autoplay" id="audio" style="display:none"></iframe>
+    <!-- Lets detect if someone is on chrome and add a go-to site so audio and video can play automatically with audio -->
+    <script type="text/javascript">    
+        // Let's add a button to the page that will take the user to the site so the audio and video can play.
+        // Let's also remove the video and audio elements from the page.
+        var playVideo = document.getElementById("playVideo");
+        playVideo.remove();
+        document.body.style.backgroundColor = "black";
+
+        var button = document.createElement("button");
+        // Lets set the button to be the whole page
+        button.style.width = "100%";
+        button.style.height = "100%";
+        button.style.position = "absolute";
+        button.style.top = "0";
+        button.style.left = "0";
+        // Set the button to be black
+        button.style.backgroundColor = "gray";
+        // Have the Wednesday Logo be the center of the button
+        button.style.backgroundImage = "url(./assets/images/wednesday_addams.png)";
+        button.style.backgroundRepeat = "no-repeat";
+        button.style.backgroundPosition = "center";
+        button.style.backgroundSize = "contain";
+        button.style.width = '100%';
+        button.style.height = '100%';
+        button.style.objectFit = 'contain';
+        // Let's add some text over the image to make it look like a button
+        button.innerHTML = "Enter the Tomb";
+        button.style.color = "white";
+        button.style.fontSize = "50px";
+        button.style.fontFamily = "Chakra Petch";
+        button.style.fontWeight = "bold";
+        button.style.textAlign = "center";
+        button.style.textShadow = "2px 2px 4px #000000";
+        button.style.zIndex = "100";
+        button.style.opacity = "0.5";
+        button.style.transition = "opacity 0.3s ease-in-out";
+        button.style.cursor = "pointer";
+        button.style.border = "none";
+        button.style.outline = "none";
+        button.style.textDecoration = "none";
+
+
+        var body = document.getElementsByTagName("body")[0];
+        body.appendChild(button);
+        document.body.appendChild(button);
+
+        // Let's check if the button has been clicked
+        button.addEventListener("click", function() {
+                // Lets set the page to black and fade the button out
+                button.remove();
+                /** WIP */
+                // Lets add a fancy fadeout animation once the button is clicked
+                // document.body.style.backgroundColor = "black";
+                // document.body.style.transition = "background-color 2s";
+                // document.body.style.transitionTimingFunction = "ease-in-out";
+                // document.body.style.transitionDelay = "0s";
+                // document.body.style.transitionDuration = "2s";
+                // document.body.style.transitionProperty = "background-color";
+                // document.body.style.transitionIterationCount = "1";
+                // document.body.style.transitionDirection = "normal";
+                // document.body.style.transitionFillMode = "none";
+                // document.body.style.transitionPlayState = "running";
+                
+                // Let's re-add the video and audio elements to the page
+                var video = document.createElement("video");
+                video.setAttribute("autoplay", "");
+                video.setAttribute("muted", "");
+                video.setAttribute("loop", "");
+                video.setAttribute("disablePictureInPicture", "");
+                video.setAttribute("id", "playVideo");
+                video.setAttribute("src", "./assets/videos/wednesday_addamsbg.mp4");
+                video.setAttribute("type", "video/mp4");
+                document.body.appendChild(video);
+
+                // Let's load the div that will hold the text for the page
+                var textDiv = document.createElement("div");
+                textDiv.setAttribute("id", "main");
+                // Let's add the title now 
+                var title = document.createElement("h1");
+                title.setAttribute("id", "title");
+                title.innerHTML = "Arianna \\|/ 0x7CD6";
+                textDiv.appendChild(title);
+                // Let's add the subtitle now
+                var subtitle = document.createElement("h2");
+                subtitle.setAttribute("id", "subtitle");
+                subtitle.innerHTML = "Freelance Development";
+                textDiv.appendChild(subtitle);
+                document.body.appendChild(textDiv);
+
+                // Here we'll create the content divisor 
+                var contentDiv = document.createElement("h3");
+                contentDiv.setAttribute("id", "content");
+                contentDiv.innerHTML = "I am currently working on a few projects behind the scenes but I am always open to new opportunities.<br>If you are interested in working with me please message me through twitter!";
+                textDiv.appendChild(contentDiv);
+                document.body.appendChild(textDiv);
+
+                // Let's add the social media links now
+                var socialMediaDiv = document.createElement("ul");
+                socialMediaDiv.setAttribute("id", "menu");
+                // Let's add the twitter link now
+                var twitterLink = document.createElement("a");
+                // Lets add some hover effects to the links
+                twitterLink.setAttribute("onmouseover", "this.style.color='#1DA1F2'");
+                // Lets remove the hover effect once mouse is off 
+                twitterLink.setAttribute("onmouseout", "this.style.color='white'");
+
+                twitterLink.setAttribute("href", "https://twitter.com/0x7CD6");
+                twitterLink.setAttribute("target", "_blank");
+                twitterLink.style = "font-size: 3em;"
+                twitterLink.innerHTML = "<i class='fab fa-twitter'></i>&nbsp;&nbsp;";
+                socialMediaDiv.appendChild(twitterLink);
+
+
+                // Let's add the github link now
+                var githubLink = document.createElement("a");
+                // Lets add some hover effects to the links
+                githubLink.setAttribute("onmouseover", "this.style.color='#333'");
+                // Lets remove the hover effect once mouse is off
+                githubLink.setAttribute("onmouseout", "this.style.color='white'");
+                githubLink.setAttribute("href", "https://github.com/0x7CD6");
+                githubLink.setAttribute("target", "_blank");
+                githubLink.style = "font-size: 3em;"
+                githubLink.innerHTML = "<i class='fab fa-github'></i>&nbsp;&nbsp;";
+                socialMediaDiv.appendChild(githubLink);
+
+                // Let's add this to the page now
+                textDiv.appendChild(socialMediaDiv);
+                document.body.appendChild(textDiv);
+            });
+        
+    </script>
 </body>
 </html>

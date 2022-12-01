@@ -39,7 +39,7 @@
         // Have the Wednesday Logo be the center of the button
         button.style.backgroundImage = "url(./assets/images/goody_addams.png)";
         button.style.backgroundRepeat = "no-repeat";
-        button.style.backgroundPosition = "center";
+        button.style.backgroundPosition = 'center';
         button.style.backgroundSize = "contain";
         button.style.width = '100%';
         button.style.height = '100%';
@@ -47,7 +47,7 @@
         // Let's add some text over the image to make it look like a button
         button.innerHTML = "Enter the Tomb";
         button.style.color = "white";
-        button.style.fontSize = "50px";
+        button.style.fontSize = "45px";
         button.style.fontFamily = "Chakra Petch";
         button.style.fontWeight = "bold";
         button.style.textAlign = "center";
@@ -60,6 +60,23 @@
         button.style.outline = "none";
         button.style.textDecoration = "none";
 
+        // Let's add a little logo in the top left corner
+        var logo = document.createElement("img");
+        logo.src = "./assets/images/goody_addams.png";
+        logo.style.position = "absolute";
+        logo.style.top = "0";
+        logo.style.left = "0";
+        logo.style.width = "100px";
+        logo.style.height = "100px";
+        logo.style.objectFit = "contain";
+        logo.style.zIndex = "100";
+        logo.style.transition = "opacity 0.3s ease-in-out";
+        logo.style.opacity = "0.5";
+        logo.style.cursor = "pointer";
+        logo.style.border = "none";
+        logo.style.outline = "none";
+        logo.style.textDecoration = "none";
+        document.body.appendChild(logo);
 
         var body = document.getElementsByTagName("body")[0];
         body.appendChild(button);
@@ -67,7 +84,6 @@
 
         // Let's check if the button has been clicked
         button.addEventListener("click", function() {
-
                 // Let's add a netflix-style loading screen
                 var loadingScreen = document.createElement("div");
                 loadingScreen.style.width = "100%";
@@ -120,6 +136,7 @@
 
                 // Have the loading bar progress slowly to 100%
                 setTimeout(function() {
+                    button.style.opacity = "0";
                     loadingBarProgress.style.width = "100%";
                 }, 1000);
 
@@ -132,93 +149,76 @@
                     setTimeout(function() {
                         button.remove();
                         loadingScreen.remove();
+                        // Let's re-add the video and audio elements to the page
+                        // Let's also add it when the button is removed so it doesn't sync the audio in late.               
+                        var video = document.createElement("video");
+                        video.setAttribute("autoplay", "");
+                        video.setAttribute("muted", "");
+                        video.setAttribute("loop", "");
+                        video.setAttribute("disablePictureInPicture", "");
+                        video.setAttribute("id", "playVideo");
+                        video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4");
+                        video.setAttribute("type", "video/mp4");
+                        document.body.appendChild(video);
+
+                        // Let's load the div that will hold the text for the page
+                        var textDiv = document.createElement("div");
+                        textDiv.setAttribute("id", "main");
+                        // Let's add the title now 
+                        var title = document.createElement("h1");
+                        title.setAttribute("id", "title");
+                        title.innerHTML = "Arianna | 0x7CD6";
+                        textDiv.appendChild(title);
+                        // Let's add the subtitle now
+                        var subtitle = document.createElement("h2");
+                        subtitle.setAttribute("id", "subtitle");
+                        subtitle.innerHTML = "Freelance Development";
+                        textDiv.appendChild(subtitle);
+                        document.body.appendChild(textDiv);
+
+                        // Here we'll create the content divisor 
+                        var contentDiv = document.createElement("h3");
+                        contentDiv.setAttribute("id", "content");
+                        contentDiv.innerHTML = "I am currently working on a few projects behind the scenes but I am always open to new opportunities.<br>If you are interested in working with me please message me through twitter!";
+                        textDiv.appendChild(contentDiv);
+                        document.body.appendChild(textDiv);
+
+                        // Let's add the social media links now
+                        var socialMediaDiv = document.createElement("ul");
+                        socialMediaDiv.setAttribute("id", "menu");
+                        // Let's add the twitter link now
+                        var twitterLink = document.createElement("a");
+                        // Lets add some hover effects to the links
+                        twitterLink.setAttribute("onmouseover", "this.style.color='#1DA1F2'");
+                        // Lets remove the hover effect once mouse is off 
+                        twitterLink.setAttribute("onmouseout", "this.style.color='white'");
+
+                        twitterLink.setAttribute("href", "https://twitter.com/0x7CD6");
+                        twitterLink.setAttribute("target", "_blank");
+                        twitterLink.style = "font-size: 3em;"
+                        twitterLink.innerHTML = "<i class='fab fa-twitter'></i>&nbsp;&nbsp;";
+                        socialMediaDiv.appendChild(twitterLink);
+
+
+                        // Let's add the github link now
+                        var githubLink = document.createElement("a");
+                        // Lets add some hover effects to the links
+                        githubLink.setAttribute("onmouseover", "this.style.color='#333'");
+                        // Lets remove the hover effect once mouse is off
+                        githubLink.setAttribute("onmouseout", "this.style.color='white'");
+                        githubLink.setAttribute("href", "https://github.com/0x7CD6");
+                        githubLink.setAttribute("target", "_blank");
+                        githubLink.style = "font-size: 3em;"
+                        githubLink.innerHTML = "<i class='fab fa-github'></i>&nbsp;&nbsp;";
+                        socialMediaDiv.appendChild(githubLink);
+
+                        // Let's add this to the page now
+                        textDiv.appendChild(socialMediaDiv);
+                        document.body.appendChild(textDiv);
+
                     }, 300);
                 }, 3000);
 
-                // Let's add a little logo in the top left corner
-                var logo = document.createElement("img");
-                logo.src = "./assets/images/goody_addams.png";
-                logo.style.position = "absolute";
-                logo.style.top = "0";
-                logo.style.left = "0";
-                logo.style.width = "100px";
-                logo.style.height = "100px";
-                logo.style.objectFit = "contain";
-                logo.style.zIndex = "100";
-                logo.style.transition = "opacity 0.3s ease-in-out";
-                logo.style.opacity = "0.5";
-                logo.style.cursor = "pointer";
-                logo.style.border = "none";
-                logo.style.outline = "none";
-                logo.style.textDecoration = "none";
-                document.body.appendChild(logo);
-
-
-                // Let's re-add the video and audio elements to the page
-                var video = document.createElement("video");
-                video.setAttribute("autoplay", "");
-                video.setAttribute("muted", "");
-                video.setAttribute("loop", "");
-                video.setAttribute("disablePictureInPicture", "");
-                video.setAttribute("id", "playVideo");
-                video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4");
-                video.setAttribute("type", "video/mp4");
-                document.body.appendChild(video);
-
-                // Let's load the div that will hold the text for the page
-                var textDiv = document.createElement("div");
-                textDiv.setAttribute("id", "main");
-                // Let's add the title now 
-                var title = document.createElement("h1");
-                title.setAttribute("id", "title");
-                title.innerHTML = "Arianna | 0x7CD6";
-                textDiv.appendChild(title);
-                // Let's add the subtitle now
-                var subtitle = document.createElement("h2");
-                subtitle.setAttribute("id", "subtitle");
-                subtitle.innerHTML = "Freelance Development";
-                textDiv.appendChild(subtitle);
-                document.body.appendChild(textDiv);
-
-                // Here we'll create the content divisor 
-                var contentDiv = document.createElement("h3");
-                contentDiv.setAttribute("id", "content");
-                contentDiv.innerHTML = "I am currently working on a few projects behind the scenes but I am always open to new opportunities.<br>If you are interested in working with me please message me through twitter!";
-                textDiv.appendChild(contentDiv);
-                document.body.appendChild(textDiv);
-
-                // Let's add the social media links now
-                var socialMediaDiv = document.createElement("ul");
-                socialMediaDiv.setAttribute("id", "menu");
-                // Let's add the twitter link now
-                var twitterLink = document.createElement("a");
-                // Lets add some hover effects to the links
-                twitterLink.setAttribute("onmouseover", "this.style.color='#1DA1F2'");
-                // Lets remove the hover effect once mouse is off 
-                twitterLink.setAttribute("onmouseout", "this.style.color='white'");
-
-                twitterLink.setAttribute("href", "https://twitter.com/0x7CD6");
-                twitterLink.setAttribute("target", "_blank");
-                twitterLink.style = "font-size: 3em;"
-                twitterLink.innerHTML = "<i class='fab fa-twitter'></i>&nbsp;&nbsp;";
-                socialMediaDiv.appendChild(twitterLink);
-
-
-                // Let's add the github link now
-                var githubLink = document.createElement("a");
-                // Lets add some hover effects to the links
-                githubLink.setAttribute("onmouseover", "this.style.color='#333'");
-                // Lets remove the hover effect once mouse is off
-                githubLink.setAttribute("onmouseout", "this.style.color='white'");
-                githubLink.setAttribute("href", "https://github.com/0x7CD6");
-                githubLink.setAttribute("target", "_blank");
-                githubLink.style = "font-size: 3em;"
-                githubLink.innerHTML = "<i class='fab fa-github'></i>&nbsp;&nbsp;";
-                socialMediaDiv.appendChild(githubLink);
-
-                // Let's add this to the page now
-                textDiv.appendChild(socialMediaDiv);
-                document.body.appendChild(textDiv);
             });
         
     </script>

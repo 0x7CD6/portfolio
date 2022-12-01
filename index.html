@@ -12,15 +12,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css">
     <link rel="stylesheet" href="./assets/css/stylesheet.css">
+    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="./assets/js/scrollTimer.js"></script>
     <link rel="shortcut icon" href="./assets/images/goody_addams.png" type="image/x-icon">
     <meta name="description" content="Arianna | 0x7CD6">
+    <!-- let's add some mobile-friendly -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Arianna | 0x7CD6">
+    <link rel="apple-touch-icon" href="./assets/images/goody_addams.png">
+    <meta name="msapplication-TileImage" content="./assets/images/goody_addams.png">
+    <meta name="msapplication-TileColor" content="#2F3BA2">
+    <meta name="theme-color" content="#2F3BA2">
+    <!-- fix text sizing on mobile -->
+    <!-- resolve the text size issues on mobile devices -->
+    <style>
+        @media screen and (max-width: 480px) {
+            html {
+                font-size: 100%;
+            }
+        }
+    </style>
+
 </head>
 <body onscroll="bodyScroll()">
     <video autoplay muted loop disablePictureInPicture id="playVideo" src="./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4" type="video/mp4" />
-    <!-- Lets detect if someone is on chrome and add a go-to site so audio and video can play automatically with audio -->
-    <script type="text/javascript">    
+    <script type="text/javascript">
         // Let's add a button to the page that will take the user to the site so the audio and video can play.
         // Let's also remove the video and audio elements from the page.
         var playVideo = document.getElementById("playVideo");
@@ -84,7 +103,7 @@
 
         // Let's check if the button has been clicked
         button.addEventListener("click", function() {
-                // Let's add a netflix-style loading screen
+                // Let's add a loading screen
                 var loadingScreen = document.createElement("div");
                 loadingScreen.style.width = "100%";
                 loadingScreen.style.height = "100%";
@@ -109,7 +128,13 @@
                 loadingScreen.style.fontWeight = "bold";
                 loadingScreen.style.textAlign = "center";
                 loadingScreen.style.textShadow = "2px 2px 4px #000000";
-                loadingScreen.innerHTML = "Loading...";
+
+                {
+                    var typeWriter = new Typewriter(loadingScreen, {loop: true, delay: 75});
+                    typeWriter.typeString('Loading...').pauseFor(1000);
+                    loadingScreen.getElementsByClassName("Typewriter__cursor")[0].remove();
+                    typeWriter.start();
+                }
                 document.body.appendChild(loadingScreen);
 
                 // Let's add a loading bar
@@ -151,6 +176,7 @@
                         loadingScreen.remove();
                         // Let's re-add the video and audio elements to the page
                         // Let's also add it when the button is removed so it doesn't sync the audio in late.               
+                        
                         var video = document.createElement("video");
                         video.setAttribute("autoplay", "");
                         video.setAttribute("muted", "");
@@ -161,61 +187,146 @@
                         video.setAttribute("type", "video/mp4");
                         document.body.appendChild(video);
 
-                        // Let's load the div that will hold the text for the page
-                        var textDiv = document.createElement("div");
-                        textDiv.setAttribute("id", "main");
-                        // Let's add the title now 
-                        var title = document.createElement("h1");
-                        title.setAttribute("id", "title");
-                        title.innerHTML = "Arianna | 0x7CD6";
-                        textDiv.appendChild(title);
-                        // Let's add the subtitle now
-                        var subtitle = document.createElement("h2");
-                        subtitle.setAttribute("id", "subtitle");
-                        subtitle.innerHTML = "Freelance Development";
-                        textDiv.appendChild(subtitle);
-                        document.body.appendChild(textDiv);
+                        
+                        // Let's load the js file that will handle the text from ./redo.js
+    
+                        var contentDiv = document.createElement("div")
+                        var titleDiv = document.createElement("h1"), titleStyle = titleDiv.style;
+                        var subtitleDiv = document.createElement("h2"), subtitleStyle = subtitleDiv.style;
+                        var textDiv = document.createElement("h3"), textStyle = textDiv.style;
+                        titleDiv.setAttribute("id", "title");
+                        subtitleDiv.setAttribute("id", "subtitle");
+                        textDiv.setAttribute("id", "content");
 
-                        // Here we'll create the content divisor 
-                        var contentDiv = document.createElement("h3");
-                        contentDiv.setAttribute("id", "content");
-                        contentDiv.innerHTML = "I am currently working on a few projects behind the scenes but I am always open to new opportunities.<br>If you are interested in working with me please message me through twitter!";
-                        textDiv.appendChild(contentDiv);
-                        document.body.appendChild(textDiv);
+                        titleStyle.textShadow = "2px 2px 4px #000000";
+                        titleStyle.color = "white";
+                        titleStyle.fontFamily = "Chakra Petch";
+                        titleStyle.fontSize = "100px";
+                        titleStyle.fontWeight = "bold";
 
-                        // Let's add the social media links now
-                        var socialMediaDiv = document.createElement("ul");
-                        socialMediaDiv.setAttribute("id", "menu");
-                        // Let's add the twitter link now
-                        var twitterLink = document.createElement("a");
-                        // Lets add some hover effects to the links
-                        twitterLink.setAttribute("onmouseover", "this.style.color='#1DA1F2'");
-                        // Lets remove the hover effect once mouse is off 
-                        twitterLink.setAttribute("onmouseout", "this.style.color='white'");
+                        subtitleStyle.textShadow = "2px 2px 4px #000000";
+                        subtitleStyle.textOutline = "2px 2px 4px #000000";
+                        subtitleStyle.color = "white";
 
-                        twitterLink.setAttribute("href", "https://twitter.com/0x7CD6");
-                        twitterLink.setAttribute("target", "_blank");
-                        twitterLink.style = "font-size: 3em;"
-                        twitterLink.innerHTML = "<i class='fab fa-twitter'></i>&nbsp;&nbsp;";
-                        socialMediaDiv.appendChild(twitterLink);
+                        // Let's add a typewriting animation to the title 
+                        function addTitle() {
+                            var typeWriter = new Typewriter(titleDiv, {loop: false, delay: 75});
+                            typeWriter.pauseFor(2500).typeString('Arianna').pauseFor(1000).typeString(' | ').pauseFor(1000).typeString('0x7CD6');
+                            typeWriter.start();
+                        }
+                        
+                        function addSubtitle() {
+                            // Let's hide the cursor from the title so it doesn't look weird when the subtitle is added
+                            titleDiv.getElementsByClassName("Typewriter__cursor")[0].style.display = "none";
+
+                            var typeWriter = new Typewriter(subtitleDiv, {loop: true, delay: 75});
+                            typeWriter.pauseFor(2500).typeString('Freelance Developer.').pauseFor(1500).deleteAll();
+                            typeWriter.pauseFor(2500).typeString('<b><u>Addams Family Enthusiast!</u></b>').pauseFor(1500).deleteAll();
+                            typeWriter.pauseFor(2500).typeString('Fullstack Developer.').pauseFor(1500).deleteAll();
+                            typeWriter.pauseFor(2500).typeString('<s>Outcast.</s>').pauseFor(1500).deleteAll();
+                            typeWriter.start();
+                        }
+
+                        function addContent() {
+                            var typeWriter = new Typewriter(textDiv, {loop: true, delay: 45});
+                            typeWriter.pauseFor(2500).typeString('If you\'d like to work with me please contact me through twitter!').pauseFor(2500).deleteAll();
+                            typeWriter.pauseFor(2500).typeString('Currently working on a few projects behind the scenes!').pauseFor(2500).deleteAll();
+                            typeWriter.pauseFor(2500).typeString('. . .').pauseFor(2500).deleteAll();
+                            typeWriter.start();
+                        }
+
+                        setTimeout(function() {addTitle();contentDiv.appendChild(titleDiv)      },  1 * 1000);
+                        setTimeout(function() {addSubtitle();contentDiv.appendChild(subtitleDiv)},  7 * 1000);
+                        setTimeout(function() {addContent();contentDiv.appendChild(textDiv)     }, 14 * 1000);
+
+                        // Let's now add the content to the page
+                        document.body.appendChild(contentDiv);
+
+                        // Let's add the social media links after the subtitle is added
+                        setTimeout(function() {
+                            var bottomMenuDiv = document.createElement("div"), bottomMenuStyle = bottomMenuDiv.style;
+                            var twitterLink = document.createElement("a"), twitterStyle = twitterLink.style;
+                            var githubLink = document.createElement("a"), githubStyle = githubLink.style;
+                            var discordLink = document.createElement("a"), discordStyle = discordLink.style;
+                            var linkedinLink = document.createElement("a"), linkedinStyle = linkedinLink.style;
+                            var emailLink = document.createElement("a"), emailStyle = emailLink.style;
+
+                            githubLink.innerHTML = "Github";
+                            twitterLink.innerHTML = "Twitter";
+
+                            // Just makes it easier for the attributes to be set here
+                                        /** Menu Div Attributes */
+                            bottomMenuDiv.setAttribute("id", "socialmedia");
+                                        /** Twitter Attributes */
+                            twitterLink.setAttribute("href", "https://twitter.com/0x7CD6");
+                            twitterLink.setAttribute("target", "_blank");
+                            twitterLink.setAttribute("rel", "noopener noreferrer");
+                                        /** Github Attributes */
+                            githubLink.setAttribute("href", "https://github.com/0x7CD6");
+                            githubLink.setAttribute("target", "_blank");
+                            githubLink.setAttribute("rel", "noopener noreferrer");
 
 
-                        // Let's add the github link now
-                        var githubLink = document.createElement("a");
-                        // Lets add some hover effects to the links
-                        githubLink.setAttribute("onmouseover", "this.style.color='#333'");
-                        // Lets remove the hover effect once mouse is off
-                        githubLink.setAttribute("onmouseout", "this.style.color='white'");
-                        githubLink.setAttribute("href", "https://github.com/0x7CD6");
-                        githubLink.setAttribute("target", "_blank");
-                        githubLink.style = "font-size: 3em;"
-                        githubLink.innerHTML = "<i class='fab fa-github'></i>&nbsp;&nbsp;";
-                        socialMediaDiv.appendChild(githubLink);
+                            // Bottom Menu CSS
+                            bottomMenuStyle.position = "absolute";
+                            bottomMenuStyle.bottom = "0";
+                            bottomMenuStyle.right = "0";
+                            bottomMenuStyle.margin = "10px";
+                            bottomMenuStyle.zIndex = "100";
+                            // Twitter CSS
+                            twitterStyle.margin = "10px";
+                            twitterStyle.textDecoration = "none";
+                            twitterStyle.color = "white";
+                            twitterStyle.fontFamily = "Chakra Petch";
+                            twitterStyle.fontSize = "50px";
+                            twitterStyle.fontWeight = "bold";
+                            twitterStyle.textShadow = "2px 2px 4px #000000";
+                            // Github CSS
+                            githubStyle.margin = "10px";
+                            githubStyle.textDecoration = "none";
+                            githubStyle.color = "white";
+                            githubStyle.fontFamily = "Chakra Petch";
+                            githubStyle.fontSize = "50px";
+                            githubStyle.fontWeight = "bold";
+                            githubStyle.textShadow = "2px 2px 4px #000000";
 
-                        // Let's add this to the page now
-                        textDiv.appendChild(socialMediaDiv);
-                        document.body.appendChild(textDiv);
+                            bottomMenuDiv.appendChild(githubLink);
+                            bottomMenuDiv.appendChild(twitterLink);
 
+                                    /* Animations/Event Listeners */
+
+                            // Adding the animation once mouse is hovering over twitter link
+                            twitterLink.addEventListener("mouseover", function() {
+                                twitterStyle.textShadow = "2px 2px 4px #1DA1F2";
+                                twitterStyle.color = "#1DA1F2";
+                            });
+                            // Removing the animation once mouse is no longer hovering over twitter link
+                            twitterLink.addEventListener("mouseout", function() {
+                                twitterStyle.textShadow = "2px 2px 4px #000000";
+                                twitterStyle.color = "white";
+                            });
+
+                            // Let's add the github link
+                            // let's add a really cool hover effect to the github link to match githubs color scheme
+                            githubLink.addEventListener("mouseover", function() {
+                                githubStyle.textShadow = "2px 2px 4px #333";
+                                githubStyle.color = "#333";
+                            });
+                            // Let's remove the hover effect when the mouse leaves the link
+                            githubLink.addEventListener("mouseout", function() {
+                                githubStyle.textShadow = "2px 2px 4px #000000";
+                                githubStyle.color = "white";
+                            });
+
+
+                            // Fade in animatioins for the social media links
+                            bottomMenuDiv.style.opacity = "0";
+                            bottomMenuDiv.style.transition = "opacity 1s ease-in-out";
+                            setTimeout(function() {bottomMenuDiv.style.opacity = "1";}, 1 * 1000);
+
+                            // Let's add the social media links to the page
+                            document.body.appendChild(bottomMenuDiv);
+                        }, 4 * 1000);
                     }, 300);
                 }, 3000);
 

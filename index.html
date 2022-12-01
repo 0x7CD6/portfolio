@@ -67,21 +67,74 @@
 
         // Let's check if the button has been clicked
         button.addEventListener("click", function() {
-                // Lets set the page to black and fade the button out
-                button.remove();
-                /** WIP */
-                // Lets add a fancy fadeout animation once the button is clicked
-                // document.body.style.backgroundColor = "black";
-                // document.body.style.transition = "background-color 2s";
-                // document.body.style.transitionTimingFunction = "ease-in-out";
-                // document.body.style.transitionDelay = "0s";
-                // document.body.style.transitionDuration = "2s";
-                // document.body.style.transitionProperty = "background-color";
-                // document.body.style.transitionIterationCount = "1";
-                // document.body.style.transitionDirection = "normal";
-                // document.body.style.transitionFillMode = "none";
-                // document.body.style.transitionPlayState = "running";
-                
+
+                // Let's add a netflix-style loading screen
+                var loadingScreen = document.createElement("div");
+                loadingScreen.style.width = "100%";
+                loadingScreen.style.height = "100%";
+                loadingScreen.style.position = "absolute";
+                loadingScreen.style.top = "0";
+                loadingScreen.style.left = "0";
+                loadingScreen.style.backgroundColor = "black";
+                loadingScreen.style.zIndex = "100";
+                loadingScreen.style.opacity = "1";
+                loadingScreen.style.transition = "opacity 0.3s ease-in-out";
+                loadingScreen.style.cursor = "pointer";
+                loadingScreen.style.border = "none";
+                loadingScreen.style.outline = "none";
+                loadingScreen.style.textDecoration = "none";
+                loadingScreen.style.display = "flex";
+                loadingScreen.style.justifyContent = "center";
+                loadingScreen.style.alignItems = "center";
+                loadingScreen.style.flexDirection = "column";
+                loadingScreen.style.color = "white";
+                loadingScreen.style.fontSize = "50px";
+                loadingScreen.style.fontFamily = "Chakra Petch";
+                loadingScreen.style.fontWeight = "bold";
+                loadingScreen.style.textAlign = "center";
+                loadingScreen.style.textShadow = "2px 2px 4px #000000";
+                loadingScreen.innerHTML = "Loading...";
+                document.body.appendChild(loadingScreen);
+
+                // Let's add a loading bar
+                var loadingBar = document.createElement("div");
+                loadingBar.style.width = "100%";
+                loadingBar.style.height = "10px";
+                loadingBar.style.position = "absolute";
+                loadingBar.style.bottom = "0";
+                loadingBar.style.left = "0";
+                loadingBar.style.backgroundColor = "black";
+                loadingBar.style.zIndex = "100";
+
+                var loadingBarProgress = document.createElement("div");
+                loadingBarProgress.style.width = "0%";
+                loadingBarProgress.style.height = "100%";
+                loadingBarProgress.style.position = "absolute";
+                loadingBarProgress.style.top = "0";
+                loadingBarProgress.style.left = "0";
+                loadingBarProgress.style.backgroundColor = "white";
+                loadingBarProgress.style.zIndex = "100";
+                loadingBarProgress.style.transition = "width 0.3s ease-in-out";
+                loadingBar.appendChild(loadingBarProgress);
+                loadingScreen.appendChild(loadingBar);
+
+                // Have the loading bar progress slowly to 100%
+                setTimeout(function() {
+                    loadingBarProgress.style.width = "100%";
+                }, 1000);
+
+                // Let's remove the button and loading screen after 3 seconds.
+                setTimeout(function() {
+                    // add a slow fade out to the loading screen and button
+                    button.style.opacity = "0";
+                    loadingScreen.style.opacity = "0";
+                    // remove the loading screen after 0.3 seconds (the same time as the fade out) so it doesn't look weird when the page loads
+                    setTimeout(function() {
+                        button.remove();
+                        loadingScreen.remove();
+                    }, 300);
+                }, 3000);
+
                 // Let's add a little logo in the top left corner
                 var logo = document.createElement("img");
                 logo.src = "./assets/images/goody_addams.png";

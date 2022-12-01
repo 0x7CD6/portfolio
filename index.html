@@ -189,14 +189,30 @@
                         // Let's re-add the video and audio elements to the page
                         // Let's also add it when the button is removed so it doesn't sync the audio in late.               
                         
-                        var video = document.createElement("video");
+                        var video = document.createElement("video"), videoStyle = video.style;
                         video.setAttribute("autoplay", "");
                         video.setAttribute("muted", "");
                         video.setAttribute("loop", "");
+                        video.setAttribute("playsinline", "");
                         video.setAttribute("disablePictureInPicture", "");
+                        video.setAttribute("webkit-playsinline", "");
+                        video.setAttribute("x-webkit-airplay", "allow");
+                        video.setAttribute("x5-video-player-type", "h5");
+                        video.setAttribute("x5-video-player-fullscreen", "true");
+                        video.setAttribute("x5-video-orientation", "portraint");
+                        video.setAttribute("x5-video-allowfullscreen", "true");
+                        video.setAttribute("autobuffer", "");
                         video.setAttribute("id", "playVideo");
                         video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4");
                         video.setAttribute("type", "video/mp4");
+                        videoStyle.height = '100%';
+                        videoStyle.width = '100%';
+                        videoStyle.position = "fixed";
+                        videoStyle.top = "0";
+                        videoStyle.left = "0";
+                        videoStyle.objectFit = "cover";
+                        videoStyle.zIndex = "-1";
+                        videoStyle.transition = "opacity 0.3s ease-in-out";
                         document.body.appendChild(video);
 
                         

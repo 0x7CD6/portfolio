@@ -4,6 +4,7 @@
     <title>Arianna | 0x7CD6</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Chakra+Petch">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -18,7 +19,7 @@
     <link rel="shortcut icon" href="./assets/images/goody_addams.png" type="image/x-icon">
     <meta name="description" content="Arianna | 0x7CD6">
     <!-- let's add some mobile-friendly -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=1024">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Arianna | 0x7CD6">
@@ -29,16 +30,27 @@
     <!-- fix text sizing on mobile -->
     <!-- resolve the text size issues on mobile devices -->
     <style>
+        @viewport {
+            width: device-width ;
+            zoom: 1.0 ;
+        }
+        @-ms-viewport {
+            width: device-width ;
+        }
+
         @media screen and (max-width: 480px) {
             html {
                 font-size: 100%;
+            }
+            div {
+                flex-basis: 33%;
             }
         }
     </style>
 
 </head>
 <body onscroll="bodyScroll()">
-    <video autoplay muted loop disablePictureInPicture id="playVideo" src="./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4" type="video/mp4" />
+    <video autoplay playsinline muted loop disablePictureInPicture id="playVideo" src="./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4" type="video/mp4" />
     <script type="text/javascript">
         // Let's add a button to the page that will take the user to the site so the audio and video can play.
         // Let's also remove the video and audio elements from the page.

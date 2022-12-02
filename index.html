@@ -213,7 +213,27 @@
                         videoStyle.objectFit = "cover";
                         videoStyle.zIndex = "-1";
                         videoStyle.transition = "opacity 0.3s ease-in-out";
-                        document.body.appendChild(video);
+
+                        // Let's add the :) to the page and only have it load on a very rare occasion instead of the video already loaded.
+                        var random = Math.floor(Math.random() * 10000);
+                        // Lets get a random number
+                        if (random == 1) {
+                            // If the random number is 1, play video :)
+                            video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideos.mp4");
+                            document.body.appendChild(video);
+                            // After 4 minutes and 44 seconds of the video, let's remove the special video and add the real video back to the page
+                            setTimeout(function() {
+                                document.body.removeChild(video);
+                                video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4");
+                                document.body.appendChild(video)
+                            }, 284 * 1000);
+                        } else {
+                            // If the random number is not 1, play the normal video
+                            video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4");
+                            // Now let's add the video to the page
+                            document.body.appendChild(video);
+                        }
+                        
 
                         // Let's add an almost-transparent background to the whole page above the video
                         var backgroundDiv = document.createElement("div"), backgroundStyle = backgroundDiv.style;
@@ -373,47 +393,6 @@
                             setTimeout(function() {addProjectsTitle();contentDiv_Projects.appendChild(projectsTitle)      },  1 * 1000);
                             setTimeout(function() {addProjectsSubTitle();contentDiv_Projects.appendChild(projectsSubtitle)},  7.2 * 1000);
                         }
-
-
-                        // :)
-                        var specialVideo = document.createElement("video"), specialVideoStyle = video.style;
-                        specialVideo.setAttribute("autoplay", "");
-                        specialVideo.setAttribute("muted", "");
-                        specialVideo.setAttribute("loop", "");
-                        specialVideo.setAttribute("playsinline", "");
-                        specialVideo.setAttribute("disablePictureInPicture", "");
-                        specialVideo.setAttribute("webkit-playsinline", "");
-                        specialVideo.setAttribute("x-webkit-airplay", "allow");
-                        specialVideo.setAttribute("x5-video-player-type", "h5");
-                        specialVideo.setAttribute("x5-video-player-fullscreen", "true");
-                        specialVideo.setAttribute("x5-video-orientation", "portraint");
-                        specialVideo.setAttribute("x5-video-allowfullscreen", "true");
-                        specialVideo.setAttribute("autobuffer", "");
-                        specialVideo.setAttribute("id", "playVideo");
-                        specialVideo.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideos.mp4");
-                        specialVideo.setAttribute("type", "video/mp4");
-                        specialVideoStyle.height = '100%';
-                        specialVideoStyle.width = '100%';
-                        specialVideoStyle.position = "fixed";
-                        specialVideoStyle.top = "0";
-                        specialVideoStyle.left = "0";
-                        specialVideoStyle.objectFit = "cover";
-                        specialVideoStyle.zIndex = "-1";
-                        specialVideoStyle.transition = "opacity 0.3s ease-in-out";
-
-                        // Let's add the :) to the page and only have it load on a very rare occasion instead of the video already loaded.
-                        function loadSpecialVideo() {
-                            var random = Math.floor(Math.random() * 1000);
-                            // Lets get a random number
-                            if (random == 666) {
-                                document.body.removeChild(video);
-                                document.body.appendChild(specialVideo);
-                                // After 4 minutes and 44 seconds of the video, let's remove the special video and add the real video back to the page
-                                setTimeout(function() {document.body.removeChild(specialVideo);document.body.appendChild(video)}, 284 * 1000);
-                            }
-                        }
-
-                        loadSpecialVideo();
 
 
                         // Let's add the social media links after the subtitle is added

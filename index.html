@@ -150,14 +150,21 @@
             document.body.appendChild(backgroundVideo);
 
             var supposedCurrentTime = 0; // Let's set the supposed current time to 0
+            // Let's check if the video has been played
             backgroundVideo.addEventListener('timeupdate', function() { // Let's add an event listener to the video to check the current time
                 if (!video.seeking) supposedCurrentTime = backgroundVideo.currentTime; // If the video isn't seeking then set the supposed current time to the current time of the video
             });
 
+            // Let's add a function to check the current time of the video
             backgroundVideo.addEventListener('seeking', function() { // Let's add an event listener to the video to check if the video is seeking
                 if (Math.abs(backgroundVideo.currentTime - supposedCurrentTime) > 0.1) backgroundVideo.currentTime = supposedCurrentTime; // If the video is seeking then set the current time of the video to the supposed current time
             });
 
+            // Prevent the video from being paused
+            backgroundVideo.addEventListener('pause', function() {
+                backgroundVideo.play();
+            });
+            
             // Let's remove the button and loading screen after 3 seconds.
             setTimeout(function() {
                 backgroundVideo.remove();

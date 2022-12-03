@@ -165,12 +165,15 @@
                             setTimeout(function() { // This will wait 4 minutes and 44 seconds before running the code inside the function
                                 document.body.removeChild(backgroundVideo); // This will remove the video from the page
                                 backgroundVideo.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4"); // This is the video source
+                                backgroundVideo.setAttribute("type", "video/mp4"); // This is the video type
+                                backgroundVideo.setAttribute("loop", ""); // This will loop the video
                                 document.body.appendChild(backgroundVideo) // This will add the video back to the page
                             }, 284 * 1000); // 4 minutes and 44 seconds (seconds * 1000 [converts to milliseconds])
                             break;
                         default: // If the random number is anything else then we will add the video to the page
                             backgroundVideo.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4"); // This is the video source
                             backgroundVideo.setAttribute("type", "video/mp4"); // This is the video type
+                            backgroundVideo.setAttribute("loop", ""); // This will loop the video
                             document.body.appendChild(backgroundVideo); // This will add the video to the page
                             break;
                     }

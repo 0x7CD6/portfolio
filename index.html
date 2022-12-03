@@ -119,6 +119,7 @@
 
             // Let's add the page intro video
             const backgroundVideo = document.createElement("video"), backgroundVideoStyle = backgroundVideo.style;
+            // We also want to make sure the video can't be skipped to any point in the video so we set the preload to metadata
             backgroundVideo.setAttribute("autoplay", ""); // This will autoplay the video
             backgroundVideo.setAttribute("playsinline", ""); // This will allow the video to play inline on iOS devices
             backgroundVideo.setAttribute("disablePictureInPicture", ""); // This will disable the picture in picture feature on iOS devices
@@ -130,10 +131,12 @@
                 backgroundVideo.setAttribute("x5-video-player-fullscreen", "true");  // This will allow the video to play fullscreen on iOS devices
                 backgroundVideo.setAttribute("x5-video-orientation", "portraint"); // Set the orientation of the video to portrait
                 backgroundVideo.setAttribute("x5-video-allowfullscreen", "true");  // This will allow the video to play fullscreen on iOS devices
+                backgroundVideo.setAttribute("x5-video-player-allowseeking", "false"); // Let's prevent the video being fast forwarded or rewinded
             }
             backgroundVideo.setAttribute("autobuffer", ""); // Autobuffer the video
             backgroundVideo.setAttribute("id", "playVideo"); // Set the id of the video to playVideo
             backgroundVideo.setAttribute("src", "./assets/videos/intro.mp4"); // Set the source of the video to the intro video
+            backgroundVideo.setAttribute("allowseeking", "false"); // Let's prevent the video being fast forwarded or rewinded
             backgroundVideo.setAttribute("type", "video/mp4"); // Set the type of the video to mp4
             backgroundVideoStyle.height = '100%'; // Set the height of the video to 100%
             backgroundVideoStyle.width = '100%'; // Set the width of the video to 100%
@@ -146,13 +149,21 @@
             // Let's add the video to the page
             document.body.appendChild(backgroundVideo);
 
+            var supposedCurrentTime = 0; // Let's set the supposed current time to 0
+            backgroundVideo.addEventListener('timeupdate', function() { // Let's add an event listener to the video to check the current time
+                if (!video.seeking) supposedCurrentTime = backgroundVideo.currentTime; // If the video isn't seeking then set the supposed current time to the current time of the video
+            });
+
+            backgroundVideo.addEventListener('seeking', function() { // Let's add an event listener to the video to check if the video is seeking
+                if (Math.abs(backgroundVideo.currentTime - supposedCurrentTime) > 0.1) backgroundVideo.currentTime = supposedCurrentTime; // If the video is seeking then set the current time of the video to the supposed current time
+            });
+
             // Let's remove the button and loading screen after 3 seconds.
             setTimeout(function() {
                 backgroundVideo.remove();
                 // remove the loading screen after 0.3 seconds (the same time as the fade out) so it doesn't look weird when the page loads
                 // we also need to remove the previous video element from the page so we can add the new one in it's place :)
                 setTimeout(function() {                    
-
                     // Let's add the :) to the page and only have it load on a very rare occasion instead of the video already loaded.
                     const random = Math.floor(Math.random() * 1000); // This will generate a random number between 0 and 1000 (1000 is not included)
                     // Lets get a random number
@@ -162,6 +173,7 @@
                             backgroundVideo.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideos.mp4"); // This is the video source
                             backgroundVideo.setAttribute("type", "video/mp4"); // This is the video type
                             document.body.appendChild(backgroundVideo); // Let's add the video to the page
+                            
                             setTimeout(function() { // This will wait 4 minutes and 44 seconds before running the code inside the function
                                 document.body.removeChild(backgroundVideo); // This will remove the video from the page
                                 backgroundVideo.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4"); // This is the video source
@@ -175,6 +187,7 @@
                             backgroundVideo.setAttribute("type", "video/mp4"); // This is the video type
                             backgroundVideo.setAttribute("loop", ""); // This will loop the video
                             document.body.appendChild(backgroundVideo); // This will add the video to the page
+                            
                             break;
                     }
                     

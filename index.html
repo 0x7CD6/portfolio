@@ -40,10 +40,10 @@
 
         @media screen and (max-width: 480px) {
             html {
-                font-size: 100%;
+            font-size: 100%;
             }
             div {
-                flex-basis: 33%;
+            flex-basis: 33%;
             }
         }
     </style>
@@ -54,11 +54,11 @@
     <script type="text/javascript">
         // Let's add a button to the page that will take the user to the site so the audio and video can play.
         // Let's also remove the video and audio elements from the page.
-        var playVideo = document.getElementById("playVideo");
+        const playVideo = document.getElementById("playVideo");
         playVideo.remove();
         document.body.style.backgroundColor = "black";
 
-        var button = document.createElement("button");
+        const button = document.createElement("button");
         // Lets set the button to be the whole page
         button.style.width = "100%";
         button.style.height = "100%";
@@ -92,7 +92,7 @@
         button.style.textDecoration = "none";
 
         // Let's add a little logo in the top left corner
-        var logo = document.createElement("img");
+        const logo = document.createElement("img");
         logo.src = "./assets/images/goody_addams.png";
         logo.style.position = "absolute";
         logo.style.top = "0";
@@ -109,767 +109,721 @@
         logo.style.textDecoration = "none";
         document.body.appendChild(logo);
 
-        var body = document.getElementsByTagName("body")[0];
+        const body = document.getElementsByTagName("body")[0];
         body.appendChild(button);
         document.body.appendChild(button);
 
         // Let's check if the button has been clicked
         button.addEventListener("click", function() {
-                // Let's add a loading screen
-                var loadingScreen = document.createElement("div");
-                loadingScreen.style.width = "100%";
-                loadingScreen.style.height = "100%";
-                loadingScreen.style.position = "absolute";
-                loadingScreen.style.top = "0";
-                loadingScreen.style.left = "0";
-                loadingScreen.style.backgroundColor = "black";
-                loadingScreen.style.zIndex = "100";
-                loadingScreen.style.opacity = "1";
-                loadingScreen.style.transition = "opacity 0.3s ease-in-out";
-                loadingScreen.style.cursor = "pointer";
-                loadingScreen.style.border = "none";
-                loadingScreen.style.outline = "none";
-                loadingScreen.style.textDecoration = "none";
-                loadingScreen.style.display = "flex";
-                loadingScreen.style.justifyContent = "center";
-                loadingScreen.style.alignItems = "center";
-                loadingScreen.style.flexDirection = "column";
-                loadingScreen.style.color = "white";
-                loadingScreen.style.fontSize = "50px";
-                loadingScreen.style.fontFamily = "Chakra Petch";
-                loadingScreen.style.fontWeight = "bold";
-                loadingScreen.style.textAlign = "center";
-                loadingScreen.style.textShadow = "2px 2px 4px #000000";
+            // Here we remove the button but not the logo in the top left corner however we do also brigten it for a moment to let the user know it's still there
+            button.style.opacity = "0";
+            // Let's also remove the ability to click the button
+            button.style.pointerEvents = "none";
 
-                {
-                    var typeWriter = new Typewriter(loadingScreen, {loop: true, delay: 75});
-                    typeWriter.typeString('Loading...').pauseFor(1000);
-                    loadingScreen.getElementsByClassName("Typewriter__cursor")[0].remove();
-                    typeWriter.start();
-                }
-                document.body.appendChild(loadingScreen);
+            // Let's add the page intro video
+            const video = document.createElement("video"), videoStyle = video.style;
+            video.setAttribute("autoplay", "");
+            video.setAttribute("muted", "");
+            video.setAttribute("playsinline", "");
+            video.setAttribute("disablePictureInPicture", "");
+            video.setAttribute("webkit-playsinline", "");
+            video.setAttribute("x-webkit-airplay", "allow");
+            video.setAttribute("x5-video-player-type", "h5");
+            video.setAttribute("x5-video-player-fullscreen", "true");
+            video.setAttribute("x5-video-orientation", "portraint");
+            video.setAttribute("x5-video-allowfullscreen", "true");
+            video.setAttribute("autobuffer", "");
+            video.setAttribute("id", "playVideo");
+            video.setAttribute("src", "./assets/videos/intro.mp4");
+            video.setAttribute("type", "video/mp4");
+            videoStyle.height = '100%';
+            videoStyle.width = '100%';
+            videoStyle.position = "fixed";
+            videoStyle.top = "0";
+            videoStyle.left = "0";
+            videoStyle.objectFit = "cover";
+            videoStyle.zIndex = "-1";
+            videoStyle.transition = "opacity 0.3s ease-in-out";
+            // Let's add the video to the page
+            document.body.appendChild(video);
 
-                // Let's add a loading bar
-                var loadingBar = document.createElement("div");
-                loadingBar.style.width = "100%";
-                loadingBar.style.height = "10px";
-                loadingBar.style.position = "absolute";
-                loadingBar.style.bottom = "0";
-                loadingBar.style.left = "0";
-                loadingBar.style.backgroundColor = "black";
-                loadingBar.style.zIndex = "100";
+            // Let's remove the button and loading screen after 3 seconds.
+            setTimeout(function() {
+                video.remove();
+                // remove the loading screen after 0.3 seconds (the same time as the fade out) so it doesn't look weird when the page loads
+                // we also need to remove the previous video element from the page so we can add the new one in it's place :)
+                setTimeout(function() {                    
+                    const video = document.createElement("video"), videoStyle = video.style;
+                    video.setAttribute("autoplay", ""); // This will autoplay the video
+                    video.setAttribute("loop", ""); // This will loop the video
+                    video.setAttribute("playsinline", ""); // This will allow the video to play inline on iOS
+                    video.setAttribute("disablePictureInPicture", ""); // This will disable the picture in picture button.
+                    video.setAttribute("webkit-playsinline", "");
+                    video.setAttribute("x-webkit-airplay", "allow"); 
+                    video.setAttribute("x5-video-player-type", "h5"); 
+                    video.setAttribute("x5-video-player-fullscreen", "true"); 
+                    video.setAttribute("x5-video-orientation", "portraint");
+                    video.setAttribute("x5-video-allowfullscreen", "true");
+                    video.setAttribute("autobuffer", ""); // This will auto buffer the video
+                    video.setAttribute("id", "playVideo"); // This will allow us to remove the video later if we ever need to although we won't need to in this case
+                    video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4"); // This is the video source
+                    video.setAttribute("type", "video/mp4"); // This is the video type
+                    videoStyle.height = '100%'; // This will set the height of the video to 100% of the page
+                    videoStyle.width = '100%'; // This will set the width of the video to 100% of the page
+                    videoStyle.position = "fixed"; // This will set the position of the video to fixed so it will stay in the same place on the page
+                    videoStyle.top = "0"; // This will set the top of the video to 0 so it will be at the top of the page
+                    videoStyle.left = "0"; // This will set the left of the video to 0 so it will be at the left of the page
+                    videoStyle.objectFit = "cover"; // This will set the object fit of the video to cover so it will cover the entire page
+                    videoStyle.zIndex = "-1"; // This will set the z-index of the video to -1 so it will be behind everything else on the page
+                    videoStyle.transition = "opacity 0.3s ease-in-out"; // This will set the transition of the video to fade in over 0.3 seconds
 
-                var loadingBarProgress = document.createElement("div");
-                loadingBarProgress.style.width = "0%";
-                loadingBarProgress.style.height = "100%";
-                loadingBarProgress.style.position = "absolute";
-                loadingBarProgress.style.top = "0";
-                loadingBarProgress.style.left = "0";
-                loadingBarProgress.style.backgroundColor = "white";
-                loadingBarProgress.style.zIndex = "100";
-                loadingBarProgress.style.transition = "width 0.3s ease-in-out";
-                loadingBar.appendChild(loadingBarProgress);
-                loadingScreen.appendChild(loadingBar);
+                    // Let's add the :) to the page and only have it load on a very rare occasion instead of the video already loaded.
+                    const random = Math.floor(Math.random() * 1000); // This will generate a random number between 0 and 1000 (1000 is not included)
+                    // Lets get a random number
+                    switch(random) {
+                        case 1: // If the random number is 1 then we will add the :) to the page
+                            video.setAttribute("src", "./assets/videos/Smiley_FullBackgroundVideo.mp4"); // This is the video source
+                            video.setAttribute("type", "video/mp4"); // This is the video type
+                            document.body.appendChild(video); // Let's add the video to the page
+                            setTimeout(function() { // This will wait 4 minutes and 44 seconds before running the code inside the function
+                                document.body.removeChild(video); // This will remove the video from the page
+                                video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4"); // This is the video source
+                                document.body.appendChild(video) // This will add the video back to the page
+                            }, 284 * 1000); // 4 minutes and 44 seconds (seconds * 1000 [converts to milliseconds])
+                            break;
+                        default: // If the random number is anything else then we will add the video to the page
+                            video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4"); // This is the video source
+                            document.body.appendChild(video); // This will add the video to the page
+                            break;
+                    }
+                    
+                    // Let's add an almost-transparent background to the whole page above the video
+                    const backgroundDiv = document.createElement("div"), backgroundStyle = backgroundDiv.style;
+                    backgroundStyle.position = "absolute";
+                    backgroundStyle.top = "0";
+                    backgroundStyle.left = "0";
+                    backgroundStyle.right = "0";
+                    backgroundStyle.bottom = "0";
+                    backgroundStyle.margin = "auto";
+                    backgroundStyle.width = "100%";
+                    backgroundStyle.height = "100%";
+                    backgroundStyle.backgroundColor = "rgba(0, 0, 0, 0.35)";
+                    backgroundStyle.zIndex = "998";
+                    // Let's add the transparent background to the page
+                    document.body.appendChild(backgroundDiv);
+                    // Let's make sure the transparent background is always on top even if text is added to the page
+                    backgroundDiv.style.zIndex = "998";
 
-                // Have the loading bar progress slowly to 100%
-                setTimeout(function() {
-                    button.style.opacity = "0";
-                    loadingBarProgress.style.width = "100%";
-                }, 1000);
+                    // Home Page
+                    const contentDiv_Home = document.createElement("home"); // This will create a div element for the home page
+                    const contentDiv_AboutMe = document.createElement("aboutme"); // This will create a div element for the about me page
+                    const contentDiv_Projects = document.createElement("projects"); // This will create a div element for the projects page
+                    contentDiv_Home.setAttribute("id", "home"); // This will set the id of the home page div to home
+                    contentDiv_AboutMe.setAttribute("id", "aboutme"); // This will set the id of the about me page div to aboutme
+                    contentDiv_Projects.setAttribute("id", "projects"); // This will set the id of the projects page div to projects
+                    let timeout; // This will be used to store the timeout for the entire page
 
-                // Let's remove the button and loading screen after 3 seconds.
-                setTimeout(function() {
-                    // add a slow fade out to the loading screen and button
-                    button.style.opacity = "0";
-                    loadingScreen.style.opacity = "0";
-                    // remove the loading screen after 0.3 seconds (the same time as the fade out) so it doesn't look weird when the page loads
-                    setTimeout(function() {
-                        button.remove();
-                        loadingScreen.remove();
-                        // Let's re-add the video and audio elements to the page
-                        // Let's also add it when the button is removed so it doesn't sync the audio in late.               
-                        
-                        var video = document.createElement("video"), videoStyle = video.style;
-                        video.setAttribute("autoplay", "");
-                        video.setAttribute("muted", "");
-                        video.setAttribute("loop", "");
-                        video.setAttribute("playsinline", "");
-                        video.setAttribute("disablePictureInPicture", "");
-                        video.setAttribute("webkit-playsinline", "");
-                        video.setAttribute("x-webkit-airplay", "allow");
-                        video.setAttribute("x5-video-player-type", "h5");
-                        video.setAttribute("x5-video-player-fullscreen", "true");
-                        video.setAttribute("x5-video-orientation", "portraint");
-                        video.setAttribute("x5-video-allowfullscreen", "true");
-                        video.setAttribute("autobuffer", "");
-                        video.setAttribute("id", "playVideo");
-                        video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4");
-                        video.setAttribute("type", "video/mp4");
-                        videoStyle.height = '100%';
-                        videoStyle.width = '100%';
-                        videoStyle.position = "fixed";
-                        videoStyle.top = "0";
-                        videoStyle.left = "0";
-                        videoStyle.objectFit = "cover";
-                        videoStyle.zIndex = "-1";
-                        videoStyle.transition = "opacity 0.3s ease-in-out";
+                    function clearPage() { // This will clear the page's content
+                        if (timeout != null) clearTimeout(timeout); // This will clear the timeout for the entire page once the page is changed and this function is called.
 
-                        // Let's add the :) to the page and only have it load on a very rare occasion instead of the video already loaded.
-                        var random = Math.floor(Math.random() * 1000);
-                        // Lets get a random number
-                        if (random == 1) {
-                            // If the random number is 1, play video :)
-                            video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideos.mp4");
-                            document.body.appendChild(video);
-                            // After 4 minutes and 44 seconds of the video, let's remove the special video and add the real video back to the page
-                            setTimeout(function() {
-                                document.body.removeChild(video);
-                                video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4");
-                                document.body.appendChild(video)
-                            }, 284 * 1000);
-                        } else {
-                            // If the random number is not 1, play the normal video
-                            video.setAttribute("src", "./assets/videos/Wednesday_Addams_FullBackgroundVideo.mp4");
-                            // Now let's add the video to the page
-                            document.body.appendChild(video);
+                        if (document.getElementById("home")) { // If the home page is on the page then remove it
+                            if (document.getElementsByClassName("title")[0]) document.getElementsByClassName("title")[0].remove(); // Let's remove the title from the page
+                            if (document.getElementsByClassName("subtitle")[0]) document.getElementsByClassName("subtitle")[0].remove(); // Let's remove the title from the page
+                            document.getElementById("home").remove(); // Let's remove the home page from the page
+                        } else if (document.getElementById("aboutme")) { // If the about me page is on the page then remove it
+                            if (document.getElementsByClassName("title")[0]) document.getElementsByClassName("title")[0].remove(); // Let's remove the title from the page
+                            if (document.getElementsByClassName("subtitle")[0]) document.getElementsByClassName("subtitle")[0].remove(); // Let's remove the title from the page
+                            document.getElementById("aboutme").remove(); // Let's remove the about me page from the page
+                        } else if (document.getElementById("projects")) { // If the projects page is on the page then remove it
+                            if (document.getElementsByClassName("title")[0]) document.getElementsByClassName("title")[0].remove(); // Let's remove the title from the page
+                            if (document.getElementsByClassName("subtitle")[0]) document.getElementsByClassName("subtitle")[0].remove(); // Let's remove the title from the page
+                            document.getElementById("projects").remove(); // Let's remove the projects page from the page
                         }
-                        
+                    }
 
-                        // Let's add an almost-transparent background to the whole page above the video
-                        var backgroundDiv = document.createElement("div"), backgroundStyle = backgroundDiv.style;
-                        backgroundStyle.position = "absolute";
-                        backgroundStyle.top = "0";
-                        backgroundStyle.left = "0";
-                        backgroundStyle.right = "0";
-                        backgroundStyle.bottom = "0";
-                        backgroundStyle.margin = "auto";
-                        backgroundStyle.width = "100%";
-                        backgroundStyle.height = "100%";
-                        backgroundStyle.backgroundColor = "rgba(0, 0, 0, 0.35)";
-                        backgroundStyle.zIndex = "998";
-                        // Let's add the transparent background to the page
-                        document.body.appendChild(backgroundDiv);
-                        // Let's make sure the transparent background is always on top even if text is added to the page
-                        backgroundDiv.style.zIndex = "998";
+                    function homePage() {
+                        clearPage(); // This will clear the page
 
                         // Home Page
-                        var contentDiv_Home = document.createElement("div");
-                        var homeTitle = document.createElement("h1"), titleStyle = homeTitle.style;
-                        var homeSubtitle = document.createElement("h2"), subtitleStyle = homeSubtitle.style;
-                        var homeSubText = document.createElement("h3"), textStyle = homeSubText.style;
-                        homeTitle.setAttribute("id", "title");
-                        homeSubtitle.setAttribute("id", "subtitle");
-                        homeSubText.setAttribute("id", "content");
+                        const title = document.createElement("h1"), titleStyle = title.style; // This will create the title for the about me page
+                        contentDiv_Home.appendChild(title); // This will add the title to the home page
+                        const subtitle = document.createElement("h3"), subtitleStyle = subtitle.style; // This will create the subtitle for the about me page
+                        title.setAttribute("class", "title"); // This will add a class to the title
+                        subtitle.setAttribute("class", "subtitle"); // This will add a class to the subtitle
 
-                        titleStyle.textShadow = "2px 2px 4px #000000";
-                        titleStyle.color = "white";
-                        titleStyle.fontFamily = "Chakra Petch";
-                        titleStyle.fontSize = "100px";
-                        titleStyle.fontWeight = "bold";
+                        title.setAttribute("id", "title"); // This will set the id of the title to title
+                        titleStyle.textShadow = "2px 2px 4px #000000"; // This will add a shadow to the title
+                        titleStyle.color = "white"; // This will set the color of the title to white
+                        titleStyle.fontFamily = "Chakra Petch"; // This will set the font of the title to Chakra Petch
+                        titleStyle.fontSize = "100px"; // This will set the font size of the title to 100px
+                        titleStyle.fontWeight = "bold"; // This will set the font weight of the title to bold
 
-                        subtitleStyle.textShadow = "2px 2px 4px #000000";
-                        subtitleStyle.textOutline = "2px 2px 4px #000000";
-                        subtitleStyle.color = "white";
+                        subtitle.setAttribute("id", "subtitle"); // This will set the id of the subtitle to subtitle
+                        subtitleStyle.textShadow = "2px 2px 4px #000000"; // This will add a shadow to the subtitle
+                        subtitleStyle.textOutline = "2px 2px 4px #000000"; // This will add an outline to the subtitle
+                        subtitleStyle.color = "white"; // This will set the color of the subtitle to white
 
-                        // Let's add a typewriting animation to the title 
-                        function addTitle() {
-                            var typeWriter = new Typewriter(homeTitle, {loop: false, delay: 75});
-                            typeWriter.pauseFor(2500).typeString('Arianna').pauseFor(1000).typeString(' | ').pauseFor(1000).typeString('0x7CD6');
-                            typeWriter.start();
-                        }
+                        // Let's add a typewriting animation to the title and subtitle
+                        const titleTypeWriter = new Typewriter(title, {loop: false, delay: 75 }); // This will create a new typewriter for the title
+                        const subtitleTypeWriter = new Typewriter(subtitle, {loop: false, delay: 75 }) // This will create a new typewriter for the subtitle
                         
-                        function addSubtitle() {
-                            // Let's hide the cursor from the title so it doesn't look weird when the subtitle is added
-                            homeTitle.getElementsByClassName("Typewriter__cursor")[0].style.display = "none";
+                        // Let's add the text to the title
+                        titleTypeWriter.pauseFor(2500).typeString('Arianna').pauseFor(1000).typeString(' | ').pauseFor(1000).typeString('0x7CD6'); // This will type out the title
+                        titleTypeWriter.start(); // This will start the typewriter
+                        
+                        // Let's add the text to the subtitle
+                        subtitleTypeWriter.pauseFor(2500).typeString('Freelance Developer.').pauseFor(1500).deleteAll(); // This will type out the subtitle all different lines
+                        subtitleTypeWriter.pauseFor(2500).typeString('<b><u>Addams Family Enthusiast!</u></b>').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(2500).typeString('Fullstack Developer.').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(2500).typeString('<s>Outcast.</s>').pauseFor(1500).deleteAll();
 
-                            var typeWriter = new Typewriter(homeSubtitle, {loop: true, delay: 75});
-                            typeWriter.pauseFor(2500).typeString('Freelance Developer.').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('<b><u>Addams Family Enthusiast!</u></b>').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('Fullstack Developer.').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('<s>Outcast.</s>').pauseFor(1500).deleteAll();
-                            typeWriter.start();
-                        }
+                        timeout = setTimeout(function() { // This will wait 5.8 seconds before running the code inside the function (5.8 seconds is the time it takes for the typewriter to finish typing out the title)
+                            title.getElementsByClassName("Typewriter__cursor")[0].style.display = "none"; // This will hide the cursor from the title
+                            contentDiv_Home.appendChild(subtitle); // This will add the subtitle to the page
+                            subtitleTypeWriter.start(); // This will start the typewriter
+                            timeout = null;  // This will set the timeout to null so it won't run again when the page is changed
+                        }, 5.8 * 1000); // 5.8 seconds (seconds * 1000 [converts to milliseconds])
+                        timeout; // this will run the timeout function
 
-                        function addContent() {
-                            var typeWriter = new Typewriter(homeSubText, {loop: true, delay: 45});
-                            typeWriter.pauseFor(2500).typeString('If you\'d like to work with me please contact me through twitter!').pauseFor(2500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('Currently working on a few projects behind the scenes!').pauseFor(2500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('. . .').pauseFor(2500).deleteAll();
-                            typeWriter.start();
-                        }
-
-                        setTimeout(function() {addTitle();contentDiv_Home.appendChild(homeTitle)      },  1 * 1000);
-                        setTimeout(function() {addSubtitle();contentDiv_Home.appendChild(homeSubtitle)},  7 * 1000);
-                        setTimeout(function() {addContent();contentDiv_Home.appendChild(homeSubText)     }, 14 * 1000);
-
-                        // Let's now add the content to the page
-                        document.body.appendChild(contentDiv_Home);
+                        document.body.appendChild(contentDiv_Home); // This will add the home page to the page
+                    }
+                    
+                    function aboutMePage() {
+                        clearPage(); // This will clear the page
 
                         // About me page
-                        var contentDiv_AboutMe = document.createElement("div");
-                        var aboutMeTitle = document.createElement("h1"), aboutMeTitleStyle = aboutMeTitle.style;
-                        var aboutMeSubtitle = document.createElement("h3"), aboutMeSubtitleStyle = aboutMeSubtitle.style;
+                        const title = document.createElement("h1"), titleStyle = title.style; // This will create the title for the about me page
+                        contentDiv_AboutMe.appendChild(title); // This will add the title to the about me page
+                        const subtitle = document.createElement("h3"), subtitleStyle = subtitle.style; // This will create the subtitle for the about me page
+                        title.setAttribute("class", "title"); // This will add a class to the title
+                        subtitle.setAttribute("class", "subtitle"); // This will add a class to the subtitle
 
-                        aboutMeTitle.setAttribute("id", "title");
-                        aboutMeSubtitle.setAttribute("id", "subtitle");
+                        title.setAttribute("id", "title"); // This will set the id of the title to title
+                        titleStyle.textShadow = "2px 2px 4px #000000"; // This will add a shadow to the title
+                        titleStyle.color = "white"; // This will set the color of the title to white
+                        titleStyle.fontFamily = "Chakra Petch"; // This will set the font of the title to Chakra Petch
+                        titleStyle.fontSize = "100px"; // This will set the font size of the title to 100px
+                        titleStyle.fontWeight = "bold"; // This will set the font weight of the title to bold
 
-                        aboutMeTitleStyle.textShadow = "2px 2px 4px #000000";
-                        aboutMeTitleStyle.color = "white";
-                        aboutMeTitleStyle.fontFamily = "Chakra Petch";
-                        aboutMeTitleStyle.fontSize = "100px";
-                        aboutMeTitleStyle.fontWeight = "bold";
+                        subtitle.setAttribute("id", "subtitle"); // This will set the id of the subtitle to subtitle
+                        subtitleStyle.textShadow = "2px 2px 4px #000000"; // This will add a shadow to the subtitle
+                        subtitleStyle.textOutline = "2px 2px 4px #000000"; // This will add an outline to the subtitle
+                        subtitleStyle.color = "white"; // This will set the color of the subtitle to white
 
-                        aboutMeSubtitleStyle.textShadow = "2px 2px 4px #000000";
-                        aboutMeSubtitleStyle.textOutline = "2px 2px 4px #000000";
-                        aboutMeSubtitleStyle.color = "white";
-
-                        function addAboutMeTitle() {
-                            var typeWriter = new Typewriter(aboutMeTitle, {loop: false, delay: 65});
-                            typeWriter.pauseFor(2500).typeString('More About Me').pauseFor(1000).typeString(' | ').pauseFor(1000).typeString('Arianna');
-                            typeWriter.start();
-                        }
+                        // Let's add a typewriting animation to the title and subtitle
+                        const titleTypeWriter = new Typewriter(title, {loop: false, delay: 75 }); // This will create a new typewriter for the title
+                        const subtitleTypeWriter = new Typewriter(subtitle, {loop: false, delay: 75 }) // This will create a new typewriter for the subtitle
                         
-                        function addAboutMeSubtitle() {
-                            // Let's hide the cursor from the title so it doesn't look weird when the subtitle is added
-                            aboutMeTitle.getElementsByClassName("Typewriter__cursor")[0].style.display = "none";
 
-                            var typeWriter = new Typewriter(aboutMeSubtitle, {loop: true, delay: 70});
-                            typeWriter.pauseFor(2500).typeString('I\'m an 18 year old full-stack developer.').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('I\'m a self-taught developer from the young age of 6.').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('I enjoy playing games and helping to improve them internally both security-wise and integrity-wise.').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('I\'ve spent most of my time on a computer from a young age either on Eclipse, IntelliJ or currently VSCodium.').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('I\'m currently workiing on 4 projects under an NDA for different companies.').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('My first ever language learned was Java and it\'s stuck with me through to javascript.').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('My first ever project was a replica game of snake in 3D built through java about 4 months into first learning to code.').pauseFor(1500).deleteAll();
-                            typeWriter.start();
-                        }
+                        // Let's add the text to the title
+                        titleTypeWriter.pauseFor(2500).typeString('More About Me').pauseFor(1000).typeString(' | ').pauseFor(1000).typeString('Arianna'); // This will type out the title
+                        titleTypeWriter.start(); // This will start the typewriter
 
-                        function loadAboutMePageText() {
-                            setTimeout(function() {addAboutMeTitle();contentDiv_AboutMe.appendChild(aboutMeTitle)      },  1 * 1000);
-                            setTimeout(function() {addAboutMeSubtitle();contentDiv_AboutMe.appendChild(aboutMeSubtitle)},  7.2 * 1000);
-                        }
+                        // Let's add the text to the subtitle
+                        subtitleTypeWriter.pauseFor(2500).typeString('I\'m an 18 year old full-stack developer.').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(2500).typeString('I\'m a self-taught developer from the young age of 6.').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(2500).typeString('I enjoy playing games and helping to improve them internally both security-wise and integrity-wise.').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(2500).typeString('I\'ve spent most of my time on a computer from a young age either on Eclipse, IntelliJ or currently VSCodium.').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(2500).typeString('I\'m currently workiing on 4 projects under an NDA for different companies.').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(2500).typeString('My first ever language learned was Java and it\'s stuck with me through to javascript.').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(2500).typeString('My first ever project was a replica game of snake in 3D built through java about 4 months into first learning to code.').pauseFor(1500).deleteAll();
+
+                        timeout = setTimeout(function() { // This will wait 6.5 seconds before running the code inside the function (6.5 seconds is the time it takes for the typewriter to finish typing out the title)
+                            title.getElementsByClassName("Typewriter__cursor")[0].style.display = "none"; // This will hide the cursor from the title
+                            contentDiv_AboutMe.appendChild(subtitle); // This will add the subtitle to the page
+                            subtitleTypeWriter.start(); // This will start the typewriter
+                            timeout = null;  // This will set the timeout to null so it won't run again when the page is changed
+                        }, 6.5 * 1000); // 6.5 seconds (seconds * 1000 [converts to milliseconds])
+                        timeout; // This will run the timeout function
+
+                        document.body.appendChild(contentDiv_AboutMe); // This will add the about me page to the page
+                    }
+
+                    function projectsPage() {
+                        clearPage(); // This will clear the page
+                        
+                        // Projects Page
+                        const title = document.createElement("h1"), titleStyle = title.style; // This will create the title for the about me page
+                        contentDiv_Projects.appendChild(title); // This will add the title to the about me page
+                        const subtitle = document.createElement("h3"), subtitleStyle = subtitle.style; // This will create the subtitle for the about me page
+                        title.setAttribute("class", "title"); // This will add a class to the title
+                        subtitle.setAttribute("class", "subtitle"); // This will add a class to the subtitle
+
+                        // Here's the attributes for the title and subtitle
+                        title.setAttribute("id", "title"); // This will set the id of the title to title
+                        subtitle.setAttribute("id", "subtitle"); // This will set the id of the subtitle to subtitle
+
+                        // Here's the styles for the title
+                        titleStyle.textShadow = "2px 2px 4px #000000"; // This will add a shadow to the title
+                        titleStyle.color = "white"; // This will set the color of the title to white
+                        titleStyle.fontFamily = "Chakra Petch"; // This will set the font of the title to Chakra Petch
+                        titleStyle.fontSize = "100px"; // This will set the font size of the title to 100px
+                        titleStyle.fontWeight = "bold"; // This will set the font weight of the title to bold
+
+                        // Here's the styles for the subtitle
+                        subtitleStyle.textShadow = "2px 2px 4px #000000"; // This will add a shadow to the subtitle
+                        subtitleStyle.textOutline = "2px 2px 4px #000000"; // This will add an outline to the subtitle
+                        subtitleStyle.color = "white"; // This will set the color of the subtitle to white
+
+                        // Let's add a typewriting animation to the title and subtitle
+                        const titleTypeWriter = new Typewriter(title, {loop: false, delay: 75 }); // This will create a new typewriter for the title
+                        const subtitleTypeWriter = new Typewriter(subtitle, {loop: false, delay: 75 }) // This will create a new typewriter for the subtitle
+                        
+                        // Let's add the text to the title
+                        titleTypeWriter.pauseFor(2500).typeString('My Current Projects').pauseFor(1000).typeString(' | ').pauseFor(1000).typeString('Arianna'); // This will type out the title
+                        titleTypeWriter.start(); // This will start the typewriter
+                        
+                        // Let's add the text to the subtitle
+                        subtitleTypeWriter.pauseFor(2500).typeString('WIP...').pauseFor(1500).deleteAll(); // This will type out the subtitle
+                        subtitleTypeWriter.pauseFor(2500).typeString('Work In Progess...').pauseFor(1500).deleteAll();
+                        subtitleTypeWriter.pauseFor(500).typeString('Execute Order 66...').pauseFor(500).deleteAll();
+
+                        timeout = setTimeout(function() { // This will wait 6.8 seconds before running the code inside the function (6.8 seconds is the time it takes for the typewriter to finish typing out the title)
+                            title.getElementsByClassName("Typewriter__cursor")[0].style.display = "none"; // This will hide the cursor from the title
+                            contentDiv_Projects.appendChild(subtitle); // This will add the subtitle to the page
+                            subtitleTypeWriter.start(); // This will start the typewriter
+                            timeout = null; // This will set the timeout to null so it won't run again when the page is changed
+                        }, 6.8 * 1000); // 6.8 seconds (seconds * 1000 [converts to milliseconds])
+                        timeout; // This will run the timeout
+                        document.body.appendChild(contentDiv_Projects); // This will add the projects page to the page
+                    }
+
+                    
+                    homePage();
 
 
+                    // Let's add the social media links after the subtitle is added
+                    setTimeout(function() {
+                        const bottomMenuDiv = document.createElement("div"), bottomMenuStyle = bottomMenuDiv.style;
+                        
+                        const twitterLink = document.createElement("a"), twitterStyle = twitterLink.style; twitterLink.innerHTML = "Twitter";
+                        const githubLink = document.createElement("a"), githubStyle = githubLink.style; githubLink.innerHTML = "Github";
+                        const discordLink = document.createElement("a"), discordStyle = discordLink.style; discordLink.innerHTML = "Discord";
+                        const linkedinLink = document.createElement("a"), linkedinStyle = linkedinLink.style; linkedinLink.innerHTML = "LinkedIn";
+                        const emailLink = document.createElement("a"), emailStyle = emailLink.style; emailLink.innerHTML = "Email";
+                        const resumeLink = document.createElement("a"), resumeStyle = resumeLink.style; resumeLink.innerHTML = "Resume";
+                        const spotifyLink = document.createElement("a"), spotifyStyle = spotifyLink.style; spotifyLink.innerHTML = "Spotify";
+                        const projectsLink = document.createElement("a"), projectsStyle = projectsLink.style; projectsLink.innerHTML = "Projects";
+                        const homeLink = document.createElement("a"), homeStyle = homeLink.style; homeLink.innerHTML = "Home";
+                        const aboutLink = document.createElement("a"), aboutStyle = aboutLink.style; aboutLink.innerHTML = "About Me";
+
+                                /** Menu Div Attributes */
+                        bottomMenuDiv.setAttribute("id", "socialmedia");
+                                /** External Links */
+                        twitterLink.setAttribute("href", "https://twitter.com/0x7CD6");
+                        githubLink.setAttribute("href", "https://github.com/0x7CD6");
+                        discordLink.setAttribute("href", "https://discordapp.com/users/placeholderlink");
+                        linkedinLink.setAttribute("href", "https://www.linkedin.com/in/placeholdername/");
+                        emailLink.setAttribute("href", "mailto:0x7@arianna.is");
+                        
+                        twitterLink.setAttribute("target", "_blank"); // This will open the link in a new tab
+                        githubLink.setAttribute("target", "_blank"); // This will open the link in a new tab
+                        discordLink.setAttribute("target", "_blank"); // This will open the link in a new tab
+                        linkedinLink.setAttribute("target", "_blank"); // This will open the link in a new tab
+                        emailLink.setAttribute("target", "_blank"); // This will open the link in a new tab
+
+                        // Let's add the styles to the elements
+                        // Menu Div
+                        bottomMenuStyle.position = "absolute"; // This will set the position of the menu div to absolute
+                        bottomMenuStyle.bottom = "0"; // This will set the bottom of the menu div to 0
+                        bottomMenuStyle.left = "0"; // This will set the left of the menu div to 0
+                        bottomMenuStyle.right = "0"; // This will set the right of the menu div to 0
+                        bottomMenuStyle.margin = "auto"; // This will set the margin of the menu div to auto
+                        bottomMenuStyle.width = "100%"; // This will set the width of the menu div to 100%
+                        bottomMenuStyle.textAlign = "center"; // This will set the text alignment of the menu div to center
+                        bottomMenuStyle.padding = "10px"; // This will set the padding of the menu div to 10px
+                        bottomMenuStyle.backgroundColor = "rgba(0, 0, 0, 0.25)"; // This will set the background color of the menu div to rgba(0, 0, 0, 0.25)
+                        bottomMenuStyle.color = "white"; // This will set the color of the menu div to white
+                        bottomMenuStyle.fontFamily = "monospace"; // This will set the font of the menu div to monospace
+                        bottomMenuStyle.fontSize = "1.5em"; // This will set the font size of the menu div to 1.5em
+                        bottomMenuStyle.fontWeight = "bold"; // This will set the font weight of the menu div to bold
+                        bottomMenuStyle.zIndex = "999"; // This will set the z-index of the menu div to 999
+
+                        // Twitter Style
+                        twitterStyle.color = "white"; // This will set the color of the twitter link to white
+                        twitterStyle.fontSize = '45px'; // This will set the font size of the twitter link to 45px
+                        twitterStyle.textDecoration = "none"; // This will remove the underline from the twitter link
+                        twitterStyle.margin = "0 10px"; // This will set the margin of the twitter link to 0 10px
+                        twitterStyle.padding = "0 10px"; // This will set the padding of the twitter link to 0 10px
+                        twitterStyle.borderRadius = "5px"; // This will set the border radius of the twitter link to 5px
+                        twitterStyle.transition = "all 0.5s"; // This will set the transition of the twitter link to all 0.5s
+                        twitterStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the twitter link to all 0.5s
+                        twitterStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the twitter link to all 0.5s
+                        twitterStyle.oTransition = "all 0.5s"; // This will set the o transition of the twitter link to all 0.5s
+                        twitterStyle.msTransition = "all 0.5s"; // This will set the ms transition of the twitter link to all 0.5s
+                        twitterStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the twitter link to 2px 2px 4px #000000
+                        // Github Style
+                        githubStyle.color = "white"; // This will set the color of the github link to white
+                        githubStyle.fontSize = '45px'; // This will set the font size of the github link to 45px
+                        githubStyle.textDecoration = "none"; // This will remove the underline from the github link
+                        githubStyle.margin = "0 10px"; // This will set the margin of the github link to 0 10px
+                        githubStyle.padding = "0 10px"; // This will set the padding of the github link to 0 10px
+                        githubStyle.borderRadius = "5px"; // This will set the border radius of the github link to 5px
+                        githubStyle.transition = "all 0.5s"; // This will set the transition of the github link to all 0.5s
+                        githubStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the github link to all 0.5s
+                        githubStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the github link to all 0.5s
+                        githubStyle.oTransition = "all 0.5s"; // This will set the o transition of the github link to all 0.5s
+                        githubStyle.msTransition = "all 0.5s"; // This will set the ms transition of the github link to all 0.5s
+                        githubStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the github link to 2px 2px 4px #000000
+                        // Discord Style
+                        discordStyle.color = "white"; // This will set the color of the discord link to white
+                        discordStyle.fontSize = '45px'; // This will set the font size of the discord link to 45px
+                        discordStyle.textDecoration = "none"; // This will remove the underline from the discord link
+                        discordStyle.margin = "0 10px"; // This will set the margin of the discord link to 0 10px
+                        discordStyle.padding = "0 10px"; // This will set the padding of the discord link to 0 10px
+                        discordStyle.borderRadius = "5px"; // This will set the border radius of the discord link to 5px
+                        discordStyle.transition = "all 0.5s"; // This will set the transition of the discord link to all 0.5s
+                        discordStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the discord link to all 0.5s
+                        discordStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the discord link to all 0.5s
+                        discordStyle.oTransition = "all 0.5s"; // This will set the o transition of the discord link to all 0.5s
+                        discordStyle.msTransition = "all 0.5s"; // This will set the ms transition of the discord link to all 0.5s
+                        discordStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the discord link to 2px 2px 4px #000000
+                        // LinkedIn Style
+                        linkedinStyle.color = "white"; // This will set the color of the linkedin link to white
+                        linkedinStyle.fontSize = '45px'; // This will set the font size of the linkedin link to 45px
+                        linkedinStyle.textDecoration = "none"; // This will remove the underline from the linkedin link
+                        linkedinStyle.margin = "0 10px"; // This will set the margin of the linkedin link to 0 10px
+                        linkedinStyle.padding = "0 10px"; // This will set the padding of the linkedin link to 0 10px
+                        linkedinStyle.borderRadius = "5px"; // This will set the border radius of the linkedin link to 5px
+                        linkedinStyle.transition = "all 0.5s"; // This will set the transition of the linkedin link to all 0.5s
+                        linkedinStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the linkedin link to all 0.5s
+                        linkedinStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the linkedin link to all 0.5s
+                        linkedinStyle.oTransition = "all 0.5s"; // This will set the o transition of the linkedin link to all 0.5s
+                        linkedinStyle.msTransition = "all 0.5s"; // This will set the ms transition of the linkedin link to all 0.5s
+                        linkedinStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the linkedin link to 2px 2px 4px #000000
+                        // Email Style
+                        emailStyle.color = "white"; // This will set the color of the email link to white
+                        emailStyle.fontSize = '45px'; // This will set the font size of the email link to 45px
+                        emailStyle.textDecoration = "none"; // This will remove the underline from the email link
+                        emailStyle.margin = "0 10px"; // This will set the margin of the email link to 0 10px
+                        emailStyle.padding = "0 10px"; // This will set the padding of the email link to 0 10px
+                        emailStyle.borderRadius = "5px"; // This will set the border radius of the email link to 5px
+                        emailStyle.transition = "all 0.5s"; // This will set the transition of the email link to all 0.5s
+                        emailStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the email link to all 0.5s
+                        emailStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the email link to all 0.5s
+                        emailStyle.oTransition = "all 0.5s"; // This will set the o transition of the email link to all 0.5s
+                        emailStyle.msTransition = "all 0.5s"; // This will set the ms transition of the email link to all 0.5s
+                        emailStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the email link to 2px 2px 4px #000000
+                        // Projects Style
+                        projectsStyle.color = "white"; // This will set the color of the projects link to white
+                        projectsStyle.fontSize = "45px"; // This will set the font size of the projects link to 45px
+                        projectsStyle.textDecoration = "none"; // This will remove the underline from the projects link
+                        projectsStyle.margin = "0 10px"; // This will set the margin of the projects link to 0 10px
+                        projectsStyle.padding = "0 10px"; // This will set the padding of the projects link to 0 10px
+                        projectsStyle.borderRadius = "5px"; // This will set the border radius of the projects link to 5px
+                        projectsStyle.transition = "all 0.5s"; // This will set the transition of the projects link to all 0.5s
+                        projectsStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the projects link to all 0.5s
+                        projectsStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the projects link to all 0.5s
+                        projectsStyle.oTransition = "all 0.5s"; // This will set the o transition of the projects link to all 0.5s
+                        projectsStyle.msTransition = "all 0.5s"; // This will set the ms transition of the projects link to all 0.5s
+                        projectsStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the projects link to 2px 2px 4px #000000
+                        // Home Style
+                        homeStyle.color = "white"; // This will set the color of the home link to white
+                        homeStyle.fontSize = "45px"; // This will set the font size of the home link to 45px
+                        homeStyle.textDecoration = "none"; // This will remove the underline from the home link
+                        homeStyle.margin = "0 10px"; // This will set the margin of the home link to 0 10px
+                        homeStyle.padding = "0 10px"; // This will set the padding of the home link to 0 10px
+                        homeStyle.borderRadius = "5px"; // This will set the border radius of the home link to 5px
+                        homeStyle.transition = "all 0.5s"; // This will set the transition of the home link to all 0.5s
+                        homeStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the home link to all 0.5s
+                        homeStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the home link to all 0.5s
+                        homeStyle.oTransition = "all 0.5s"; // This will set the o transition of the home link to all 0.5s
+                        homeStyle.msTransition = "all 0.5s"; // This will set the ms transition of the home link to all 0.5s
+                        homeStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the home link to 2px 2px 4px #000000
+                        // About Style
+                        aboutStyle.color = "white"; // This will set the color of the about link to white
+                        aboutStyle.fontSize = "45px"; // This will set the font size of the about link to 45px
+                        aboutStyle.textDecoration = "none"; // This will remove the underline from the about link
+                        aboutStyle.margin = "0 10px"; // This will set the margin of the about link to 0 10px
+                        aboutStyle.padding = "0 10px"; // This will set the padding of the about link to 0 10px
+                        aboutStyle.borderRadius = "5px"; // This will set the border radius of the about link to 5px
+                        aboutStyle.transition = "all 0.5s"; // This will set the transition of the about link to all 0.5s
+                        aboutStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the about link to all 0.5s
+                        aboutStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the about link to all 0.5s
+                        aboutStyle.oTransition = "all 0.5s"; // This will set the o transition of the about link to all 0.5s
+                        aboutStyle.msTransition = "all 0.5s"; // This will set the ms transition of the about link to all 0.5s
+                        aboutStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the about link to 2px 2px 4px #000000
 
 
-                        // Projects page
-                        var contentDiv_Projects = document.createElement("div");
-                        var projectsTitle = document.createElement("h1"), projectsTitleStyle = projectsTitle.style;
-                        var projectsSubtitle = document.createElement("h2"), projectsSubtitleStyle = projectsSubtitle.style;
-                        var projectsSubText = document.createElement("h3"), projectsTextStyle = projectsSubText.style;
-
-                        projectsTitle.setAttribute("id", "title");
-                        projectsSubtitle.setAttribute("id", "subtitle");
-                        projectsSubText.setAttribute("id", "content");
-
-                        projectsTitleStyle.textShadow = "2px 2px 4px #000000";
-                        projectsTitleStyle.color = "white";
-                        projectsTitleStyle.fontFamily = "Chakra Petch";
-                        projectsTitleStyle.fontSize = "100px";
-                        projectsTitleStyle.fontWeight = "bold";
-
-                        projectsSubtitleStyle.textShadow = "2px 2px 4px #000000";
-                        projectsSubtitleStyle.textOutline = "2px 2px 4px #000000";
-                        projectsSubtitleStyle.color = "white";
-
-                        function addProjectsTitle() {
-                            var typeWriter = new Typewriter(projectsTitle, {loop: false, delay: 65});
-                            typeWriter.pauseFor(2500).typeString('My Current Projects').pauseFor(1000).typeString(' | ').pauseFor(1000).typeString('Arianna');
-                            typeWriter.start();
-                        }
-
-                        function addProjectsSubTitle() {
-                            // Let's hide the cursor from the title so it doesn't look weird when the subtitle is added
-                            projectsTitle.getElementsByClassName("Typewriter__cursor")[0].style.display = "none";
-
-                            var typeWriter = new Typewriter(projectsSubtitle, {loop: true, delay: 70});
-                            typeWriter.pauseFor(2500).typeString('WIP...').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(2500).typeString('Work In Progess...').pauseFor(1500).deleteAll();
-                            typeWriter.pauseFor(500).typeString('Execute Order 66...').pauseFor(500).deleteAll();
-                            typeWriter.start();
-                        }
-
-                        function loadProjectsText() {
-                            setTimeout(function() {addProjectsTitle();contentDiv_Projects.appendChild(projectsTitle)      },  1 * 1000);
-                            setTimeout(function() {addProjectsSubTitle();contentDiv_Projects.appendChild(projectsSubtitle)},  7.2 * 1000);
-                        }
-
-
-                        // Let's add the social media links after the subtitle is added
+                        // Let's add a cool fade in effect to the menu 
+                        bottomMenuStyle.opacity = "0";
+                        // Wait 1 second before we start the fade in
                         setTimeout(function() {
-                            var bottomMenuDiv = document.createElement("div"), bottomMenuStyle = bottomMenuDiv.style;
+                            bottomMenuStyle.opacity = "1";
+                        }, 1000);
+
+                        
+                        bottomMenuDiv.appendChild(twitterLink);
+                        bottomMenuDiv.appendChild(aboutLink);
+                        bottomMenuDiv.appendChild(projectsLink);
+                        bottomMenuDiv.appendChild(githubLink);
+                        bottomMenuDiv.appendChild(emailLink);
+
+
+                        // @- Hover Animations for Menu Bar 
+                        // It's important to note that we are using the mouseover and mouseout events instead of the hover event
+                        // This is because the hover event is not supported in all browsers
+                        // The mouseover event is fired when the mouse pointer is moved onto an element
+                        // The mouseout event is fired when the mouse pointer is moved out of an element
+                        // 
+                        // Note here that we have it in its own brackets so that we can collapse it and make it easier to read.
+                        {
+                            // Twitter
+                            {
+                                twitterLink.addEventListener("mouseover", function() {
+                                    twitterStyle.textShadow = "2px 2px 4px #1DA1F2";
+                                    twitterStyle.color = "#1DA1F2";
+                                });
+                                twitterLink.addEventListener("mouseout", function() {
+                                    twitterStyle.textShadow = "2px 2px 4px #000000";
+                                    twitterStyle.color = "white";
+                                });
+                            }
+                            // Github
+                            {
+                                githubLink.addEventListener("mouseover", function() {
+                                    githubStyle.textShadow = "2px 2px 4px #333";
+                                    githubStyle.color = "#333";
+                                });
+                                githubLink.addEventListener("mouseout", function() {
+                                    githubStyle.textShadow = "2px 2px 4px #000000";
+                                    githubStyle.color = "white";
+                                });
+                            }
+                            // Discord
+                            {
+                                discordLink.addEventListener("mouseover", function() {
+
+                                });
+                                discordLink.addEventListener("mouseout", function() {
+                                    discordStyle.textShadow = "2px 2px 4px #000000";
+                                    discordStyle.color = "white";
+                                });
+                            }
+                            // LinkedIn
+                            {
+                                linkedinLink.addEventListener("mouseover", function() {
+                                    linkedinStyle.textShadow = "2px 2px 4px #0077B5";
+                                    linkedinStyle.color = "#0077B5";
+                                });
+                                linkedinLink.addEventListener("mouseout", function() {
+                                    linkedinStyle.textShadow = "2px 2px 4px #000000";
+                                    linkedinStyle.color = "white";
+                                });
+                            }
+                            // Email
+                            {
+                                emailLink.addEventListener("mouseover", function() {
+                                    emailStyle.textShadow = "2px 2px 4px #D44638";
+                                    emailStyle.color = "#D44638";
+                                });
+                                emailLink.addEventListener("mouseout", function() {
+                                    emailStyle.textShadow = "2px 2px 4px #000000";
+                                    emailStyle.color = "white";
+                                });
+                            }
+                            // Home Page
+                            {
+                                homeLink.addEventListener("mouseover", function() {
+                                    homeStyle.textShadow = "2px 2px 4px #7F7F7F";
+                                    homeStyle.color = "#7F7F7F";
+                                });
+                                homeLink.addEventListener("mouseout", function() {
+                                    homeStyle.textShadow = "2px 2px 4px #000000";
+                                    homeStyle.color = "white";
+                                });
+                            }
+                            // About Page
+                            {
+                                aboutLink.addEventListener("mouseover", function() {
+                                    aboutStyle.textShadow = "2px 2px 4px #33333C";
+                                    aboutStyle.color = "#33333C";
+                                });
+                                aboutLink.addEventListener("mouseout", function() {
+                                    aboutStyle.textShadow = "2px 2px 4px #000000";
+                                    aboutStyle.color = "white";
+                                });
+                            }
+                            // Projects Page
+                            {
+                                projectsLink.addEventListener("mouseover", function() {
+                                    projectsStyle.textShadow = "2px 2px 4px #FFD700";
+                                    projectsStyle.color = "#FFD700";
+                                });
+                                projectsLink.addEventListener("mouseout", function() {
+                                    projectsStyle.textShadow = "2px 2px 4px #000000";
+                                    projectsStyle.color = "white";
+                                });
+                            }
+                        }                        
+
+
+                        // Here starts the fun :)
+                        // Here we will add the event listeners to the links and register if they are clicked (if they are clicked, we will change the page)
+                        homeLink.addEventListener("click", function() {
+                            homeStyle.textShadow = "2px 2px 4px #7F7F7F"; // This will set the text shadow of the home link to 2px 2px 4px #FFD700
+                            homeStyle.color = "#7F7F7F"; // This will set the color of the home link to #FFD700
+                            homeStyle.border = "none"; // This will set the border of the home link to 2px solid #FFD700
+                            homeStyle.padding = "0 8px"; // This will set the padding of the home link to 0 8px
+                            homeStyle.margin = "0 8px"; // This will set the margin of the home link to 0 8px
+                            homeStyle.fontSize = "40px"; // This will set the font size of the home link to 40px
+                            homeStyle.transition = "all 0.5s"; // This will set the transition of the home link to all 0.5s
+                            homeStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the home link to all 0.5s
+                            homeStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the home link to all 0.5s
+                            homeStyle.oTransition = "all 0.5s"; // This will set the o transition of the home link to all 0.5s
+                            homeStyle.msTransition = "all 0.5s"; // This will set the ms transition of the home link to all 0.5s
+                            // Let's add a cool fade out effect to the menu
+                            setTimeout(function() {
+                                homeStyle.textShadow = "2px 2px 4px #000000"; // This will set the text shadow of the home link to 2px 2px 4px #000000
+                                homeStyle.color = "white"; // This will set the color of the home link to white
+                                homeStyle.border = "none"; // This will set the border of the home link to none
+                                homeStyle.padding = "0 10px"; // This will set the padding of the home link to 0 10px
+                                homeStyle.margin = "0 10px"; // This will set the margin of the home link to 0 10px
+                                homeStyle.fontSize = "45px"; // This will set the font size of the home link to 45px
+                                homeStyle.transition = "all 0.5s"; // This will set the transition of the home link to all 0.5s
+                                homeStyle.webkitTransition = "all 0.5s"; // This will set the webkit transition of the home link to all 0.5s
+                                homeStyle.mozTransition = "all 0.5s"; // This will set the moz transition of the home link to all 0.5s
+                                homeStyle.oTransition = "all 0.5s"; // This will set the o transition of the home link to all 0.5s
+                                homeStyle.msTransition = "all 0.5s"; // This will set the ms transition of the home link to all 0.5s
+                            }, 500);
                             
-                            var twitterLink = document.createElement("a"), twitterStyle = twitterLink.style;
-                            var githubLink = document.createElement("a"), githubStyle = githubLink.style;
-                            var discordLink = document.createElement("a"), discordStyle = discordLink.style;
-                            var linkedinLink = document.createElement("a"), linkedinStyle = linkedinLink.style;
-                            var emailLink = document.createElement("a"), emailStyle = emailLink.style;
-                            var resumeLink = document.createElement("a"), resumeStyle = resumeLink.style;
-                            var spotifyLink = document.createElement("a"), spotifyStyle = spotifyLink.style;
-                            var projectsLink = document.createElement("a"), projectsStyle = projectsLink.style;
-                            var homeLink = document.createElement("a"), homeStyle = homeLink.style;
-                            var aboutLink = document.createElement("a"), aboutStyle = aboutLink.style;
-
-                            githubLink.innerHTML = "Github";
-                            twitterLink.innerHTML = "Twitter";
-                            discordLink.innerHTML = "Discord";
-                            linkedinLink.innerHTML = "LinkedIn";
-                            emailLink.innerHTML = "Email";
-                            resumeLink.innerHTML = "Resume";
-                            spotifyLink.innerHTML = "Spotify";
-                            projectsLink.innerHTML = "Projects";
-                            homeLink.innerHTML = "Home";
-                            aboutLink.innerHTML = "About Me";
-
-                            // Just makes it easier for the attributes to be set here
-                                        /** Menu Div Attributes */
-                            bottomMenuDiv.setAttribute("id", "socialmedia");
-                                        /** Twitter Attributes */
-                            twitterLink.setAttribute("href", "https://twitter.com/0x7CD6");
-                            twitterLink.setAttribute("target", "_blank");
-                            twitterLink.setAttribute("rel", "noopener noreferrer");
-                                        /** Github Attributes */
-                            githubLink.setAttribute("href", "https://github.com/0x7CD6");
-                            githubLink.setAttribute("target", "_blank");
-                            githubLink.setAttribute("rel", "noopener noreferrer");
-                                        /** Discord Attributes */
-                            discordLink.setAttribute("href", "https://discordapp.com/users/placeholderlink");
-                            discordLink.setAttribute("target", "_blank");
-                            discordLink.setAttribute("rel", "noopener noreferrer");
-                                        /** LinkedIn Attributes */
-                            linkedinLink.setAttribute("href", "https://www.linkedin.com/in/placeholdername/");
-                            linkedinLink.setAttribute("target", "_blank");
-                            linkedinLink.setAttribute("rel", "noopener noreferrer");
-                                        /** Email Attributes */
-                            emailLink.setAttribute("href", "mailto:0x7@arianna.is");
-                            emailLink.setAttribute("target", "_blank");
-                            emailLink.setAttribute("rel", "noopener noreferrer");
-                                        /** Projects Attributes */
-                            projectsLink.setAttribute("rel", "noopener noreferrer");
+                            bottomMenuStyle.opacity = "0"; // We're fading out the bottom menu bar here
+                            setTimeout(function() {bottomMenuStyle.opacity = "1"}, 4.5 * 1000); // We're fading in the bottom menu bar here (after 4 seconds [4 * 1000 milliseconds])
                             
-                                        /** Home Attributes */
-                            homeLink.setAttribute("rel", "noopener noreferrer");
+                            // Let's remove the text on the page and replace it with a cool fade into the Projects
 
-                                        /** About Attributes */
-                            aboutLink.setAttribute("rel", "noopener noreferrer");
+                            setTimeout(function() {
+                                aboutStyle.opacity = "1";
+                                if (bottomMenuDiv.contains(twitterLink)) bottomMenuDiv.removeChild(twitterLink);
+                                if (bottomMenuDiv.contains(aboutLink)) bottomMenuDiv.removeChild(aboutLink);
+                                if (bottomMenuDiv.contains(projectsLink)) bottomMenuDiv.removeChild(projectsLink);                            
+                                if (bottomMenuDiv.contains(homeLink)) bottomMenuDiv.removeChild(homeLink);
+                                if (bottomMenuDiv.contains(githubLink)) bottomMenuDiv.removeChild(githubLink);
+                                if (bottomMenuDiv.contains(emailLink)) bottomMenuDiv.removeChild(emailLink);
 
-                            // Let's add the styles to the elements
-                                        /** Menu Div Styles */
-                            bottomMenuStyle.position = "absolute";
-                            bottomMenuStyle.bottom = "0";
-                            bottomMenuStyle.left = "0";
-                            bottomMenuStyle.right = "0";
-                            bottomMenuStyle.margin = "auto";
-                            bottomMenuStyle.width = "100%";
-                            bottomMenuStyle.textAlign = "center";
-                            bottomMenuStyle.padding = "10px";
-                            bottomMenuStyle.backgroundColor = "rgba(0, 0, 0, 0.25)";
-                            bottomMenuStyle.color = "white";
-                            bottomMenuStyle.fontFamily = "monospace";
-                            bottomMenuStyle.fontSize = "1.5em";
-                            bottomMenuStyle.fontWeight = "bold";
-                            bottomMenuStyle.zIndex = "999";
+                                homePage(); // This will call the homePage function
 
+                                // Let's add back the menu items in a different order now
+                                bottomMenuDiv.appendChild(twitterLink);
+                                bottomMenuDiv.appendChild(aboutLink);
+                                bottomMenuDiv.appendChild(projectsLink);
+                                bottomMenuDiv.appendChild(githubLink);
+                                bottomMenuDiv.appendChild(emailLink);
+                            }, 1000);
+                        });
 
-                                        /** Twitter Styles */
-                            twitterStyle.color = "white";
-                            twitterStyle.fontSize = '45px';
-                            twitterStyle.textDecoration = "none";
-                            twitterStyle.margin = "0 10px";
-                            twitterStyle.padding = "0 10px";
-                            twitterStyle.borderRadius = "5px";
-                            twitterStyle.transition = "all 0.5s";
-                            twitterStyle.webkitTransition = "all 0.5s";
-                            twitterStyle.mozTransition = "all 0.5s";
-                            twitterStyle.oTransition = "all 0.5s";
-                            twitterStyle.msTransition = "all 0.5s";
-                            twitterStyle.textShadow = "2px 2px 4px #000000";
-
-                                        /** Github Styles */
-                            githubStyle.color = "white";
-                            githubStyle.fontSize = '45px';
-                            githubStyle.textDecoration = "none";
-                            githubStyle.margin = "0 10px";
-                            githubStyle.padding = "0 10px";
-                            githubStyle.borderRadius = "5px";
-                            githubStyle.transition = "all 0.5s";
-                            githubStyle.webkitTransition = "all 0.5s";
-                            githubStyle.mozTransition = "all 0.5s";
-                            githubStyle.oTransition = "all 0.5s";
-                            githubStyle.msTransition = "all 0.5s";
-                            githubStyle.textShadow = "2px 2px 4px #000000";
-
-                                        /** Discord Styles */
-                            discordStyle.color = "white";
-                            discordStyle.fontSize = '45px';
-                            discordStyle.textDecoration = "none";
-                            discordStyle.margin = "0 10px";
-                            discordStyle.padding = "0 10px";
-                            discordStyle.borderRadius = "5px";
-                            discordStyle.transition = "all 0.5s";
-                            discordStyle.webkitTransition = "all 0.5s";
-                            discordStyle.mozTransition = "all 0.5s";
-                            discordStyle.oTransition = "all 0.5s";
-                            discordStyle.msTransition = "all 0.5s";
-                            discordStyle.textShadow = "2px 2px 4px #000000";
-
-                                        /** LinkedIn Styles */
-                            linkedinStyle.color = "white";
-                            linkedinStyle.fontSize = '45px';
-                            linkedinStyle.textDecoration = "none";
-                            linkedinStyle.margin = "0 10px";
-                            linkedinStyle.padding = "0 10px";
-                            linkedinStyle.borderRadius = "5px";
-                            linkedinStyle.transition = "all 0.5s";
-                            linkedinStyle.webkitTransition = "all 0.5s";
-                            linkedinStyle.mozTransition = "all 0.5s";
-                            linkedinStyle.oTransition = "all 0.5s";
-                            linkedinStyle.msTransition = "all 0.5s";
-                            linkedinStyle.textShadow = "2px 2px 4px #000000";
-
-                                        /** Email Styles */
-                            emailStyle.color = "white";
-                            emailStyle.fontSize = '45px';
-                            emailStyle.textDecoration = "none";
-                            emailStyle.margin = "0 10px";
-                            emailStyle.padding = "0 10px";
-                            emailStyle.borderRadius = "5px";
-                            emailStyle.transition = "all 0.5s";
-                            emailStyle.webkitTransition = "all 0.5s";
-                            emailStyle.mozTransition = "all 0.5s";
-                            emailStyle.oTransition = "all 0.5s";
-                            emailStyle.msTransition = "all 0.5s";
-                            emailStyle.textShadow = "2px 2px 4px #000000";
-
-                                        /** Projects Styles */
-                            projectsStyle.color = "white";
-                            projectsStyle.fontSize = "45px";
-                            projectsStyle.textDecoration = "none";
-                            projectsStyle.margin = "0 10px";
-                            projectsStyle.padding = "0 10px";
-                            projectsStyle.borderRadius = "5px";
-                            projectsStyle.transition = "all 0.5s";
-                            projectsStyle.webkitTransition = "all 0.5s";
-                            projectsStyle.mozTransition = "all 0.5s";
-                            projectsStyle.oTransition = "all 0.5s";
-                            projectsStyle.msTransition = "all 0.5s";
-                            projectsStyle.textShadow = "2px 2px 4px #000000";
-
-                                        /** Home Styles */
-                            homeStyle.color = "white";
-                            homeStyle.fontSize = "45px";
-                            homeStyle.textDecoration = "none";
-                            homeStyle.margin = "0 10px";
-                            homeStyle.padding = "0 10px";
-                            homeStyle.borderRadius = "5px";
-                            homeStyle.transition = "all 0.5s";
-                            homeStyle.webkitTransition = "all 0.5s";
-                            homeStyle.mozTransition = "all 0.5s";
-                            homeStyle.oTransition = "all 0.5s";
-                            homeStyle.msTransition = "all 0.5s";
-                            homeStyle.textShadow = "2px 2px 4px #000000";
-
-                                        /** About Styles */
-                            aboutStyle.color = "white";
-                            aboutStyle.fontSize = "45px";
-                            aboutStyle.textDecoration = "none";
-                            aboutStyle.margin = "0 10px";
-                            aboutStyle.padding = "0 10px";
-                            aboutStyle.borderRadius = "5px";
+                        // About me page
+                        aboutLink.addEventListener("click", function() {
+                            aboutStyle.textShadow = "2px 2px 4px #33333C";
+                            aboutStyle.color = "#33333C";
+                            aboutStyle.border = "none";
+                            aboutStyle.padding = "0 8px";
+                            aboutStyle.margin = "0 8px";
+                            aboutStyle.fontSize = "40px";
                             aboutStyle.transition = "all 0.5s";
                             aboutStyle.webkitTransition = "all 0.5s";
                             aboutStyle.mozTransition = "all 0.5s";
                             aboutStyle.oTransition = "all 0.5s";
                             aboutStyle.msTransition = "all 0.5s";
-                            aboutStyle.textShadow = "2px 2px 4px #000000";
-
-
-                            // Let's add a cool fade in effect to the menu 
-                            bottomMenuStyle.opacity = "0";
+                            // Let's add a cool fade out effect to the menu
                             setTimeout(function() {
-                                bottomMenuStyle.opacity = "1";
-                            }, 1000);
-
-                            
-                            bottomMenuDiv.appendChild(twitterLink);
-                            bottomMenuDiv.appendChild(aboutLink);
-                            bottomMenuDiv.appendChild(projectsLink);
-                            bottomMenuDiv.appendChild(githubLink);
-                            bottomMenuDiv.appendChild(emailLink);
-
-
-                                    /* Animations/Event Listeners */
-
-                            // Adding the animation once mouse is hovering over twitter link
-                            twitterLink.addEventListener("mouseover", function() {
-                                twitterStyle.textShadow = "2px 2px 4px #1DA1F2";
-                                twitterStyle.color = "#1DA1F2";
-                            });
-                            // Removing the animation once mouse is no longer hovering over twitter link
-                            twitterLink.addEventListener("mouseout", function() {
-                                twitterStyle.textShadow = "2px 2px 4px #000000";
-                                twitterStyle.color = "white";
-                            });
-                            // let's add a really cool hover effect to the github link to match githubs color scheme
-                            githubLink.addEventListener("mouseover", function() {
-                                githubStyle.textShadow = "2px 2px 4px #333";
-                                githubStyle.color = "#333";
-                            });
-                            // Let's remove the hover effect when the mouse leaves the link
-                            githubLink.addEventListener("mouseout", function() {
-                                githubStyle.textShadow = "2px 2px 4px #000000";
-                                githubStyle.color = "white";
-                            });
-                            // Let's add a really cool hover effect to the discord link to match discord's color scheme
-                            discordLink.addEventListener("mouseover", function() {
-                                discordStyle.textShadow = "2px 2px 4px #7289DA";
-                                discordStyle.color = "#7289DA";
-                            });
-                            // Let's remove the hover effect when the mouse leaves the link
-                            discordLink.addEventListener("mouseout", function() {
-                                discordStyle.textShadow = "2px 2px 4px #000000";
-                                discordStyle.color = "white";
-                            });
-                            // Let's add a really cool hover effect to the linkedin link to match linkedin's color scheme
-                            linkedinLink.addEventListener("mouseover", function() {
-                                linkedinStyle.textShadow = "2px 2px 4px #0077B5";
-                                linkedinStyle.color = "#0077B5";
-                            });
-                            // Let's remove the hover effect when the mouse leaves the link
-                            linkedinLink.addEventListener("mouseout", function() {
-                                linkedinStyle.textShadow = "2px 2px 4px #000000";
-                                linkedinStyle.color = "white";
-                            });
-                            // Let's add a really cool hover effect to the email link to match email's color scheme
-                            emailLink.addEventListener("mouseover", function() {
-                                emailStyle.textShadow = "2px 2px 4px #D44638";
-                                emailStyle.color = "#D44638";
-                            });
-                            // Let's remove the hover effect when the mouse leaves the link
-                            emailLink.addEventListener("mouseout", function() {
-                                emailStyle.textShadow = "2px 2px 4px #000000";
-                                emailStyle.color = "white";
-                            });
-                            // Let's add a really cool hover effect to the projects link to match projects's color scheme
-                            projectsLink.addEventListener("mouseover", function() {
-                                projectsStyle.textShadow = "2px 2px 4px #FFD700";
-                                projectsStyle.color = "#FFD700";
-                            });
-                            // Let's remove the hover effect when the mouse leaves the link
-                            projectsLink.addEventListener("mouseout", function() {
-                                projectsStyle.textShadow = "2px 2px 4px #000000";
-                                projectsStyle.color = "white";
-                            });
-                            // Let's add a really cool hover effect to the home link to match home's color scheme
-                            homeLink.addEventListener("mouseover", function() {
-                                homeStyle.textShadow = "2px 2px 4px #7F7F7F";
-                                homeStyle.color = "#7F7F7F";
-                            });
-                            // Let's remove the hover effect when the mouse leaves the link
-                            homeLink.addEventListener("mouseout", function() {
-                                homeStyle.textShadow = "2px 2px 4px #000000";
-                                homeStyle.color = "white";
-                            });
-                            // Let's add a really cool hover effect to the about link to match about's color scheme
-                            aboutLink.addEventListener("mouseover", function() {
-                                aboutStyle.textShadow = "2px 2px 4px #33333C";
-                                aboutStyle.color = "#33333C";
-                            });
-                            // Let's remove the hover effect when the mouse leaves the link
-                            aboutLink.addEventListener("mouseout", function() {
                                 aboutStyle.textShadow = "2px 2px 4px #000000";
                                 aboutStyle.color = "white";
-                            });
-
-                            // Let's add a really cool click effect where it'll remove the text on the page and replace it with a cool fade back into the Home page
-                            homeLink.addEventListener("click", function() {
-                                homeStyle.textShadow = "2px 2px 4px #FFD700";
-                                homeStyle.color = "#FFD700";
-                                homeStyle.border = "2px solid #FFD700";
-                                homeStyle.padding = "0 8px";
-                                homeStyle.margin = "0 8px";
-                                homeStyle.fontSize = "40px";
-                                homeStyle.transition = "all 0.5s";
-                                homeStyle.webkitTransition = "all 0.5s";
-                                homeStyle.mozTransition = "all 0.5s";
-                                homeStyle.oTransition = "all 0.5s";
-                                homeStyle.msTransition = "all 0.5s";
-                                // Let's add a cool fade out effect to the menu
-                                setTimeout(function() {
-                                    homeStyle.textShadow = "2px 2px 4px #000000";
-                                    homeStyle.color = "white";
-                                    homeStyle.border = "none";
-                                    homeStyle.padding = "0 10px";
-                                    homeStyle.margin = "0 10px";
-                                    homeStyle.fontSize = "45px";
-                                    homeStyle.transition = "all 0.5s";
-                                    homeStyle.webkitTransition = "all 0.5s";
-                                    homeStyle.mozTransition = "all 0.5s";
-                                    homeStyle.oTransition = "all 0.5s";
-                                    homeStyle.msTransition = "all 0.5s";
-                                }, 500);
-                               // Let's fade out the bottom bar and re-fade it back in after 2 seconds
-                                bottomMenuStyle.opacity = "0";
-                                setTimeout(function() {
-                                    bottomMenuStyle.opacity = "1";
-                                }, 2000);
-                                // Let's remove the text on the page and replace it with a cool fade into the Projects
-                                aboutStyle.opacity = "0";
-                                setTimeout(function() {
-                                    aboutStyle.opacity = "1";
-                                    if (bottomMenuDiv.contains(twitterLink)) bottomMenuDiv.removeChild(twitterLink);
-                                    if (bottomMenuDiv.contains(aboutLink)) bottomMenuDiv.removeChild(aboutLink);
-                                    if (bottomMenuDiv.contains(projectsLink)) bottomMenuDiv.removeChild(projectsLink);                                    
-                                    if (bottomMenuDiv.contains(homeLink)) bottomMenuDiv.removeChild(homeLink);
-                                    if (bottomMenuDiv.contains(githubLink)) bottomMenuDiv.removeChild(githubLink);
-                                    if (bottomMenuDiv.contains(emailLink)) bottomMenuDiv.removeChild(emailLink);
-
-                                    // Check if the contentDiv is projects or about me
-                                    if (contentDiv_Projects.parentNode == document.body) document.body.removeChild(contentDiv_Projects);
-                                    else if (contentDiv_AboutMe.parentNode == document.body) document.body.removeChild(contentDiv_AboutMe);
-
-                                    document.body.appendChild(contentDiv_Home);
-
-                                    // Let's add back the menu items in a different order now
-                                    bottomMenuDiv.appendChild(twitterLink);
-                                    bottomMenuDiv.appendChild(aboutLink);
-                                    bottomMenuDiv.appendChild(projectsLink);
-                                    bottomMenuDiv.appendChild(githubLink);
-                                    bottomMenuDiv.appendChild(emailLink);
-                                }, 1000);
-                            });
-
-                            // About me page
-                            aboutLink.addEventListener("click", function() {
-                                aboutStyle.textShadow = "2px 2px 4px #FFD700";
-                                aboutStyle.color = "#FFD700";
-                                aboutStyle.border = "2px solid #FFD700";
-                                aboutStyle.padding = "0 8px";
-                                aboutStyle.margin = "0 8px";
-                                aboutStyle.fontSize = "40px";
+                                aboutStyle.border = "none";
+                                aboutStyle.padding = "0 10px";
+                                aboutStyle.margin = "0 10px";
+                                aboutStyle.fontSize = "45px";
                                 aboutStyle.transition = "all 0.5s";
                                 aboutStyle.webkitTransition = "all 0.5s";
                                 aboutStyle.mozTransition = "all 0.5s";
                                 aboutStyle.oTransition = "all 0.5s";
                                 aboutStyle.msTransition = "all 0.5s";
-                                // Let's add a cool fade out effect to the menu
-                                setTimeout(function() {
-                                    aboutStyle.textShadow = "2px 2px 4px #000000";
-                                    aboutStyle.color = "white";
-                                    aboutStyle.border = "none";
-                                    aboutStyle.padding = "0 10px";
-                                    aboutStyle.margin = "0 10px";
-                                    aboutStyle.fontSize = "45px";
-                                    aboutStyle.transition = "all 0.5s";
-                                    aboutStyle.webkitTransition = "all 0.5s";
-                                    aboutStyle.mozTransition = "all 0.5s";
-                                    aboutStyle.oTransition = "all 0.5s";
-                                    aboutStyle.msTransition = "all 0.5s";
-                                }, 500);
-                               // Let's fade out the bottom bar and re-fade it back in after 2 seconds
-                                bottomMenuStyle.opacity = "0";
-                                setTimeout(function() {
-                                    bottomMenuStyle.opacity = "1";
-                                }, 2000);
-                                // Let's remove the text on the page and replace it with a cool fade into the Projects
-                                aboutStyle.opacity = "0";
-                                setTimeout(function() {
-                                    aboutStyle.opacity = "1";
-                                    if (bottomMenuDiv.contains(twitterLink)) bottomMenuDiv.removeChild(twitterLink);
-                                    if (bottomMenuDiv.contains(aboutLink)) bottomMenuDiv.removeChild(aboutLink);
-                                    if (bottomMenuDiv.contains(projectsLink)) bottomMenuDiv.removeChild(projectsLink);
-                                    if (bottomMenuDiv.contains(githubLink)) bottomMenuDiv.removeChild(githubLink);
-                                    if (bottomMenuDiv.contains(emailLink)) bottomMenuDiv.removeChild(emailLink);
-                                    if (bottomMenuDiv.contains(projectsLink)) bottomMenuDiv.removeChild(projectsLink);
+                            }, 500);
 
-                                    // Check if the contentDiv is projects or about me
-                                    if (contentDiv_Projects.parentNode == document.body) document.body.removeChild(contentDiv_Projects);
-                                    else if (contentDiv_Home.parentNode == document.body) document.body.removeChild(contentDiv_Home);
+                            bottomMenuStyle.opacity = "0"; // We're fading out the bottom menu bar here
+                            setTimeout(function() {bottomMenuStyle.opacity = "1"}, 4.5 * 1000); // We're fading in the bottom menu bar here (after 4 seconds [4 * 1000 milliseconds])
 
-                                    // Let's add the information about me :)
-                                    document.body.appendChild(contentDiv_AboutMe);
-                                    loadAboutMePageText();
+                            // Let's remove the text on the page and replace it with a cool fade into the Projects
+                            setTimeout(function() {
+                                if (bottomMenuDiv.contains(twitterLink)) bottomMenuDiv.removeChild(twitterLink);
+                                if (bottomMenuDiv.contains(aboutLink)) bottomMenuDiv.removeChild(aboutLink);
+                                if (bottomMenuDiv.contains(projectsLink)) bottomMenuDiv.removeChild(projectsLink);
+                                if (bottomMenuDiv.contains(githubLink)) bottomMenuDiv.removeChild(githubLink);
+                                if (bottomMenuDiv.contains(emailLink)) bottomMenuDiv.removeChild(emailLink);
+                                if (bottomMenuDiv.contains(projectsLink)) bottomMenuDiv.removeChild(projectsLink);
 
-                                    // Let's add back the menu items in a different order now
-                                    bottomMenuDiv.appendChild(twitterLink);
-                                    bottomMenuDiv.appendChild(homeLink);
-                                    bottomMenuDiv.appendChild(projectsLink);
-                                    bottomMenuDiv.appendChild(githubLink);
-                                    bottomMenuDiv.appendChild(emailLink);
-                                }, 1000);
-                            });
+                                aboutMePage(); // This will call the aboutMePage function
 
-                            // Let's add a really cool click effect where it'll remove the text on the page and replace it with a cool fade into the Projects
-                            projectsLink.addEventListener("click", function() {
-                                projectsStyle.textShadow = "2px 2px 4px #FFD700";
-                                projectsStyle.color = "#FFD700";
-                                projectsStyle.border = "2px solid #FFD700";
-                                projectsStyle.padding = "0 8px";
-                                projectsStyle.margin = "0 8px";
-                                projectsStyle.fontSize = "40px";
-                                projectsStyle.transition = "all 0.5s";
-                                projectsStyle.webkitTransition = "all 0.5s";
-                                projectsStyle.mozTransition = "all 0.5s";
-                                projectsStyle.oTransition = "all 0.5s";
-                                projectsStyle.msTransition = "all 0.5s";
-                                // Let's add a cool fade out effect to the menu
-                                setTimeout(function() {
-                                    projectsStyle.textShadow = "2px 2px 4px #000000";
-                                    projectsStyle.color = "white";
-                                    projectsStyle.border = "none";
-                                    projectsStyle.padding = "0 10px";
-                                    projectsStyle.margin = "0 10px";
-                                    projectsStyle.fontSize = "45px";
-                                    projectsStyle.transition = "all 0.5s";
-                                    projectsStyle.webkitTransition = "all 0.5s";
-                                    projectsStyle.mozTransition = "all 0.5s";
-                                    projectsStyle.oTransition = "all 0.5s";
-                                    projectsStyle.msTransition = "all 0.5s";
-                                }, 500);
-                               // Let's fade out the bottom bar and re-fade it back in after 2 seconds
-                                bottomMenuStyle.opacity = "0";
-                                setTimeout(function() {
-                                    bottomMenuStyle.opacity = "1";
-                                }, 2000);
-                                // Let's remove the text on the page and replace it with a cool fade into the Projects
-                                aboutStyle.opacity = "0";
-                                setTimeout(function() {
-                                    aboutStyle.opacity = "1";
-                                    if (bottomMenuDiv.contains(twitterLink)) bottomMenuDiv.removeChild(twitterLink);
-                                    if (bottomMenuDiv.contains(aboutLink)) bottomMenuDiv.removeChild(aboutLink);
-                                    if (bottomMenuDiv.contains(homeLink)) bottomMenuDiv.removeChild(homeLink);
-                                    if (bottomMenuDiv.contains(githubLink)) bottomMenuDiv.removeChild(githubLink);
-                                    if (bottomMenuDiv.contains(emailLink)) bottomMenuDiv.removeChild(emailLink);
-                                    if (bottomMenuDiv.contains(projectsLink)) bottomMenuDiv.removeChild(projectsLink);
+                                // Let's add back the menu items in a different order now
+                                bottomMenuDiv.appendChild(twitterLink);
+                                bottomMenuDiv.appendChild(homeLink);
+                                bottomMenuDiv.appendChild(projectsLink);
+                                bottomMenuDiv.appendChild(githubLink);
+                                bottomMenuDiv.appendChild(emailLink);
+                            }, 1000);
+                        });
 
-                                    // Check if the contentDiv is home or about me and remove it
-                                    if (contentDiv_Home.parentNode == document.body) document.body.removeChild(contentDiv_Home);
-                                    else if (contentDiv_AboutMe.parentNode == document.body) document.body.removeChild(contentDiv_AboutMe);
-                                    
-                                    // Let's add the information about my projects :)
-                                    document.body.appendChild(contentDiv_Projects);
-                                    loadProjectsText();
+                        // Let's add a really cool click effect where it'll remove the text on the page and replace it with a cool fade into the Projects
+                        projectsLink.addEventListener("click", function() {
+                            projectsStyle.textShadow = "2px 2px 4px #FFD700"; // Let's add a cool shadow effect to the Projects link
+                            projectsStyle.color = "#FFD700"; // Let's change the color of the Projects link to gold
+                            projectsStyle.border = "none"; // Let's add a cool border effect to the Projects link
+                            projectsStyle.padding = "0 8px"; // Let's add a cool padding effect to the Projects link
+                            projectsStyle.margin = "0 8px"; // Let's add a cool margin effect to the Projects link
+                            projectsStyle.fontSize = "40px"; // Let's add a cool font size effect to the Projects link
+                            projectsStyle.transition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                            projectsStyle.webkitTransition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                            projectsStyle.mozTransition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                            projectsStyle.oTransition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                            projectsStyle.msTransition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                            // Let's add a cool fade out effect to the menu
+                            setTimeout(function() {
+                                projectsStyle.textShadow = "2px 2px 4px #000000"; // Let's add a cool shadow effect to the Projects link
+                                projectsStyle.color = "white"; // Let's change the color of the Projects link to white
+                                projectsStyle.border = "none"; // Let's add a cool border effect to the Projects link
+                                projectsStyle.padding = "0 10px"; // Let's add a cool padding effect to the Projects link
+                                projectsStyle.margin = "0 10px"; // Let's add a cool margin effect to the Projects link
+                                projectsStyle.fontSize = "45px"; // Let's add a cool font size effect to the Projects link
+                                projectsStyle.transition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                                projectsStyle.webkitTransition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                                projectsStyle.mozTransition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                                projectsStyle.oTransition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                                projectsStyle.msTransition = "all 0.5s"; // Let's add a cool transition effect to the Projects link
+                            }, 500);
 
-                                    // Let's add back the menu items in a different order now
-                                    bottomMenuDiv.appendChild(twitterLink);
-                                    bottomMenuDiv.appendChild(aboutLink);
-                                    bottomMenuDiv.appendChild(homeLink);
-                                    bottomMenuDiv.appendChild(githubLink);
-                                    bottomMenuDiv.appendChild(emailLink);
-                                }, 1000);
-                            });
+                            bottomMenuStyle.opacity = "0"; // We're fading out the bottom menu bar here
+                            setTimeout(function() {bottomMenuStyle.opacity = "1"}, 4.5 * 1000); // We're fading in the bottom menu bar here (after 4 seconds [4 * 1000 milliseconds])
+
+                            setTimeout(function() {
+                                if (bottomMenuDiv.contains(twitterLink)) bottomMenuDiv.removeChild(twitterLink);
+                                if (bottomMenuDiv.contains(aboutLink)) bottomMenuDiv.removeChild(aboutLink);
+                                if (bottomMenuDiv.contains(homeLink)) bottomMenuDiv.removeChild(homeLink);
+                                if (bottomMenuDiv.contains(githubLink)) bottomMenuDiv.removeChild(githubLink);
+                                if (bottomMenuDiv.contains(emailLink)) bottomMenuDiv.removeChild(emailLink);
+                                if (bottomMenuDiv.contains(projectsLink)) bottomMenuDiv.removeChild(projectsLink);
+                            
+                                projectsPage(); // This will call the projectsPage function
+
+                                // Let's add back the menu items in a different order now
+                                bottomMenuDiv.appendChild(twitterLink);
+                                bottomMenuDiv.appendChild(aboutLink);
+                                bottomMenuDiv.appendChild(homeLink);
+                                bottomMenuDiv.appendChild(githubLink);
+                                bottomMenuDiv.appendChild(emailLink);
+                            }, 1000);
+                        });
 
 
-                            // Fade in animatioins for the social media links
-                            bottomMenuDiv.style.opacity = "0";
-                            bottomMenuDiv.style.transition = "opacity 1s ease-in-out";
-                            setTimeout(function() {bottomMenuDiv.style.opacity = "1";}, 1 * 1000);
+                        // Fade in animatioins for the social media links
+                        bottomMenuDiv.style.opacity = "0"; // Let's make the bottom menu invisible
+                        bottomMenuDiv.style.transition = "opacity 1s ease-in-out"; // Let's add a cool fade in effect
+                        setTimeout(function() {bottomMenuDiv.style.opacity = "1";}, 1 * 1000); // Let's make the bottom menu visible after 1 second
 
-                            // Let's add the social media links to the page
-                            document.body.appendChild(bottomMenuDiv);
-                        }, 4 * 1000);
-                    }, 300);
-                }, 3000);
+                        // Let's add the social media links to the page
+                        document.body.appendChild(bottomMenuDiv);
+                    }, 4 * 1000);
+                }, 300);
+            }, 3 * 1000);
 
             });
         

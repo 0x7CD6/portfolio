@@ -162,7 +162,12 @@
 
             // Prevent the video from being paused
             backgroundVideo.addEventListener('pause', function() {
-                backgroundVideo.play();
+                // Let's make sure if they're on mobile that they're still on the page
+                if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)) {
+                    if (document.visibilityState === "visible") backgroundVideo.play(); // If the user is still on the page then play the video
+                } else { // If the user is on desktop then play the video no matter what, make sure they can't pause it though since I can and it's annoying as hell :P
+                    backgroundVideo.play();
+                }
             });
             
             // Let's remove the button and loading screen after 3 seconds.
